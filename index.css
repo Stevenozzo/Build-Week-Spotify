@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #181818;
+}
+
+h2 {
+  color: #ffffff;
+}
+
+#sidebar {
+  width: 20%;
+  height: 100vh;
+  position: fixed;
+}
+
+#friends-activity {
+  width: 15%;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+}
+
+.flex-grow-1 {
+  margin-left: 20%;
+  margin-right: 15%;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.list-group-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.list-group-item div {
+  font-size: 0.9rem;
+}
+
+.card {
+  background-color: #292929;
+}
+
+#music-player {
+  background-color: #181818;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+#music-player img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+}
+
+.song-info div {
+  margin-left: 10px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.progress-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: #404040;
+  border-radius: 5px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #1db954;
+  border-radius: 5px;
+  width: 0%;
+}
+
+.time {
+  font-size: 0.8rem;
+  margin: 0 10px;
+}
+
+.player-buttons button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  margin: 0 5px;
+}
+
+.player-buttons button:hover {
+  color: #1db954;
+}
