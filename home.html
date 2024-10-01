@@ -16,12 +16,15 @@
     <!-- scheletro sidebar sinistra -->
     <div class="sidebar-left">
       <nav>
-        <a href="#" class="active"><i>🏠</i> Home</a>
-        <a href="#"><i>🔍</i> Cerca</a>
-        <a href="#"><i>📚</i> La tua libreria</a>
-        <a href="#"><i>➕</i> Crea playlist</a>
-        <a href="#"><i>❤️</i> Brani che ti piacciono</a>
-        <a href="#"><i>🎧</i> I tuoi episodi</a>
+        <div class="dropdown">
+          <a href="#" id="search-toggle" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> <i>🔍</i> Cerca </a>
+          <div class="dropdown-menu p-2">
+            <div class="input-group">
+              <input type="text" id="search-bar" class="form-control" placeholder="Cerca" />
+              <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+            </div>
+          </div>
+        </div>
 
         <div class="playlist">
           <a href="#">early stage emily syndrome</a>

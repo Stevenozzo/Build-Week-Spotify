@@ -181,3 +181,7 @@ body {
 .player-buttons button:hover {
   color: #1db954;
 }
+
+#search-bar {
+  font-size: 0.8rem;
+}

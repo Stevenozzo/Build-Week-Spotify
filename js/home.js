@@ -44,5 +44,13 @@ function getArtistData(artistId) {
     });
 }
 
-const artistName = "Antonello Venditti";
-searchArtistByName(artistName);
+const searchBar = document.getElementById("search-bar");
+const searchButton = document.getElementById("search-button");
+
+searchButton.addEventListener("click", function () {
+  const artistName = searchBar.value;
+  searchArtistByName(artistName);
+});
+
+// const artistName = "Antonello Venditti";
+// searchArtistByName(artistName);
