@@ -15,10 +15,10 @@ function searchArtistByName(artistName) {
     .then((response) => response.json())
     .then((data) => {
       if (data.artists && data.artists.items.length > 0) {
-        const venditti = data.artists.items[0];
-        console.log("Artista trovato:", venditti);
+        const artist = data.artists.items[0];
+        console.log("Artista trovato:", artist);
 
-        getArtistData(venditti.id);
+        getArtistData(artist.id);
       } else {
         console.log("Artista non trovato.");
       }
