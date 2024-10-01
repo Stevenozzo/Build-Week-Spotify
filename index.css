@@ -1,48 +1,115 @@
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  display: flex; /*aggiungo flex come chiesto*/
+  height: 100vh;
   background-color: #181818;
 }
 
-h2 {
-  color: #ffffff;
-}
-
-#sidebar {
-  width: 20%;
+/* sidebar di sinistra */
+.sidebar-left {
+  width: 20%; /* imposto larghezza come indicazione */
+  background-color: #121212;
+  color: #b3b3b3;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   height: 100vh;
-  position: fixed;
+  overflow-y: auto; /* fa in modo che in eccesso di contenuto appaia la scrollbar */
 }
 
-#friends-activity {
-  width: 15%;
+.sidebar-left a {
+  color: #b3b3b3;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.sidebar-left a:hover {
+  color: #fff;
+}
+
+.sidebar-left .playlist {
+  margin-top: 20px;
+  border-top: 1px solid #282828;
+  padding-top: 20px;
+}
+
+.playlist a {
+  font-size: 14px;
+}
+
+/* ho usato icone placeholder */
+.sidebar-left i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.sidebar-left a.active {
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Contenuto principale */
+.main-content {
+  width: 65%; /*larghezza richiesta*/
+  background-color: #181818;
+  color: #fff;
+  padding: 20px;
+}
+
+/* navbar di sinistra */
+.sidebar-right {
+  width: 15%; /*larghezza richiesta*/
+  background-color: #121212;
+  color: #b3b3b3;
+  padding: 20px;
   height: 100vh;
-  position: fixed;
-  right: 0;
+  overflow-y: auto; /*aggiunge scrollbar*/
 }
 
-.flex-grow-1 {
-  margin-left: 20%;
-  margin-right: 15%;
+.sidebar-right h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
-.list-group-item {
-  border: none;
+.friend-activity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.list-group-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+.friend-activity img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
 }
 
-.list-group-item div {
-  font-size: 0.9rem;
+.friend-activity-info {
+  flex-grow: 1;
 }
 
-.card {
-  background-color: #292929;
+.friend-activity-info h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+.friend-activity-info p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.friend-activity-time {
+  font-size: 12px;
+  color: #b3b3b3;
 }
 
 #music-player {
