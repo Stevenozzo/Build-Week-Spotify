@@ -10,7 +10,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./assets/css/index.css" />
   </head>
   <body>
     <!-- scheletro sidebar sinistra -->
@@ -90,11 +90,7 @@
     <div id="music-player">
       <!-- Song Info -->
       <div class="song-info">
-        <img
-          id="album-cover"
-          src="https://source.unsplash.com/50x50/?music"
-          alt="Album Cover"
-        />
+        <img id="album-cover" src="https://source.unsplash.com/50x50/?music" alt="Album Cover" />
         <div>
           <strong id="song-title"></strong><br />
           <span id="song-artist"></span>
@@ -113,14 +109,7 @@
         <!-- Volume -->
         <div class="slider_container ms-3 d-flex align-items-center">
           <i class="fa fa-volume-down me-2"></i>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="99"
-            class="volume_slider"
-            onchange="setVolume()"
-          />
+          <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()" />
           <i class="fa fa-volume-up ms-2"></i>
         </div>
       </div>
@@ -141,6 +130,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="./index.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
