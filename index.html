@@ -13,247 +13,125 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <!-- Sidebar -->
-    <div class="d-flex">
-      <aside>
-        <nav class="bg-black text-white p-3" id="sidebar">
-          <ul class="nav flex-column mt-4">
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">Home</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">Cerca</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">La tua libreria</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">Crea playlist</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">Brani che ti piacciono</a>
-            </li>
-            <li class="nav-item mb-2">
-              <a href="#" class="nav-link text-white">I tuoi episodi</a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+    <!-- scheletro sidebar sinistra -->
+    <div class="sidebar-left">
+      <nav>
+        <a href="#" class="active"><i>🏠</i> Home</a>
+        <a href="#"><i>🔍</i> Cerca</a>
+        <a href="#"><i>📚</i> La tua libreria</a>
+        <a href="#"><i>➕</i> Crea playlist</a>
+        <a href="#"><i>❤️</i> Brani che ti piacciono</a>
+        <a href="#"><i>🎧</i> I tuoi episodi</a>
 
-      <!-- Main Content -->
-      <div class="flex-grow-1">
-        <!-- Playlists Section -->
-        <div class="p-4">
-          <h2>Le tue Playlist</h2>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?playlist,1"
-                  class="card-img-top"
-                  alt="Playlist 1"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Playlist 1</h5>
-                  <p class="card-text">I tuoi brani preferiti.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?playlist,2"
-                  class="card-img-top"
-                  alt="Playlist 2"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Playlist 2</h5>
-                  <p class="card-text">Ascolti recenti.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?playlist,3"
-                  class="card-img-top"
-                  alt="Playlist 3"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Playlist 3</h5>
-                  <p class="card-text">Brani consigliati per te.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?playlist,4"
-                  class="card-img-top"
-                  alt="Playlist 4"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Playlist 4</h5>
-                  <p class="card-text">I tuoi classici.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="playlist">
+          <a href="#">early stage emily syndrome</a>
+          <a href="#">Be The Young</a>
+          <a href="#">saggio vibes 🎧🔥</a>
+          <a href="#">main character energy</a>
+          <a href="#">that fucking mood 🍸🎶</a>
+          <a href="#">VEE, CARLOTTA E GIACOMO VANNO A BOSIO</a>
+          <a href="#">An Emily Winchester kind of mood 🍸</a>
+          <a href="#">landing page</a>
+          <a href="#">2021 lol</a>
+          <a href="#">cosa cazzo vuol dire questa affermazione</a>
+          <a href="#">honey and glass</a>
+          <a href="#">(Revenge) Training Arc</a>
+          <a href="#">Lidia 🤝 Emily</a>
+          <a href="#">minecraft e nintendo switch</a>
+          <a href="#">silvano d'orba? I hardly know her</a>
+          <a href="#">Culo 2021</a>
+          <a href="#">Frah Quintale Mix</a>
+          <!-- testo placeholder.... -->
         </div>
+      </nav>
+    </div>
 
-        <!-- Recommended Section -->
-        <div class="p-4">
-          <h2>Consigliati per te</h2>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?music,1"
-                  class="card-img-top"
-                  alt="Album 1"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Album 1</h5>
-                  <p class="card-text">Artista 1</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?music,2"
-                  class="card-img-top"
-                  alt="Album 2"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Album 2</h5>
-                  <p class="card-text">Artista 2</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?music,3"
-                  class="card-img-top"
-                  alt="Album 3"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Album 3</h5>
-                  <p class="card-text">Artista 3</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card bg-dark text-white">
-                <img
-                  src="https://source.unsplash.com/300x300/?music,4"
-                  class="card-img-top"
-                  alt="Album 4"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Album 4</h5>
-                  <p class="card-text">Artista 4</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- main -->
+    <div class="main-content">
+      <h1>Spotify Layout</h1>
+      <p>Benvenuto nella tua app di musica preferita!</p>
+    </div>
+
+    <!-- scheletro sidebar destro -->
+    <div class="sidebar-right">
+      <h2>Attività amici</h2>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="Charlie Hookham" />
+        <div class="friend-activity-info">
+          <h4>Charlie Hookham</h4>
+          <p>In Camera - Yumi Zouma</p>
+        </div>
+        <div class="friend-activity-time">4 ore</div>
+      </div>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="lightdark02" />
+        <div class="friend-activity-info">
+          <h4>lightdark02</h4>
+          <p>Aimed to Kill - Jade LeMac</p>
+        </div>
+        <div class="friend-activity-time">8 ore</div>
+      </div>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="Valeria Traverso" />
+        <div class="friend-activity-info">
+          <h4>Valeria Traverso</h4>
+          <p>New Kings - Sleeping Wolf</p>
+        </div>
+        <div class="friend-activity-time">3 giorni</div>
+      </div>
+
+      <!-- aggiungere altro x testare scroll -->
+    </div>
+
+    <!-- Music Player -->
+    <div id="music-player">
+      <!-- Song Info -->
+      <div class="song-info">
+        <img
+          id="album-cover"
+          src="https://source.unsplash.com/50x50/?music"
+          alt="Album Cover"
+        />
+        <div>
+          <strong id="song-title"></strong><br />
+          <span id="song-artist"></span>
         </div>
       </div>
 
-      <!-- Activity Section -->
-      <div class="bg-black text-white p-3" id="friends-activity">
-        <h5 class="text-center mb-4">Attività Amici</h5>
-        <ul class="list-group">
-          <li
-            class="list-group-item bg-black text-white d-flex align-items-center"
-          >
-            <img
-              src="https://source.unsplash.com/50x50/?person,1"
-              class="rounded-circle me-3"
-              alt="Friend 1"
-            />
-            <div>
-              <strong>Amico 1</strong><br />
-              <span>Sta ascoltando: <em>Brano 1</em> di Artista 1</span>
-            </div>
-          </li>
-          <li
-            class="list-group-item bg-black text-white d-flex align-items-center"
-          >
-            <img
-              src="https://source.unsplash.com/50x50/?person,2"
-              class="rounded-circle me-3"
-              alt="Friend 2"
-            />
-            <div>
-              <strong>Amico 2</strong><br />
-              <span>Sta ascoltando: <em>Brano 2</em> di Artista 2</span>
-            </div>
-          </li>
-          <li
-            class="list-group-item bg-black text-white d-flex align-items-center"
-          >
-            <img
-              src="https://source.unsplash.com/50x50/?person,3"
-              class="rounded-circle me-3"
-              alt="Friend 3"
-            />
-            <div>
-              <strong>Amico 3</strong><br />
-              <span>Sta ascoltando: <em>Brano 3</em> di Artista 3</span>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <!-- Player Controls -->
+      <div class="controls d-flex align-items-center">
+        <div class="player-buttons">
+          <button id="prev-btn">⏮️</button>
+          <button id="play-btn">▶️</button>
+          <button id="pause-btn" style="display: none">⏸️</button>
+          <button id="next-btn">⏭️</button>
+        </div>
 
-      <!-- Music Player -->
-      <div id="music-player">
-        <!-- Song Info -->
-        <div class="song-info">
-          <img
-            id="album-cover"
-            src="https://source.unsplash.com/50x50/?music"
-            alt="Album Cover"
+        <!-- Volume -->
+        <div class="slider_container ms-3 d-flex align-items-center">
+          <i class="fa fa-volume-down me-2"></i>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="99"
+            class="volume_slider"
+            onchange="setVolume()"
           />
-          <div>
-            <strong id="song-title"></strong><br />
-            <span id="song-artist"></span>
-          </div>
+          <i class="fa fa-volume-up ms-2"></i>
         </div>
+      </div>
 
-        <!-- Player Controls -->
-        <div class="controls d-flex align-items-center">
-          <div class="player-buttons">
-            <button id="prev-btn">⏮️</button>
-            <button id="play-btn">▶️</button>
-            <button id="pause-btn" style="display: none">⏸️</button>
-            <button id="next-btn">⏭️</button>
-          </div>
-
-          <!-- Volume -->
-          <div class="slider_container ms-3 d-flex align-items-center">
-            <i class="fa fa-volume-down me-2"></i>
-            <input
-              type="range"
-              min="1"
-              max="100"
-              value="99"
-              class="volume_slider"
-              onchange="setVolume()"
-            />
-            <i class="fa fa-volume-up ms-2"></i>
-          </div>
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <span class="time" id="current-time">0:00</span>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
         </div>
-
-        <!-- Progress Bar -->
-        <div class="progress-container">
-          <span class="time" id="current-time">0:00</span>
-          <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-          </div>
-          <span class="time" id="duration">3:00</span>
-        </div>
+        <span class="time" id="duration">3:00</span>
       </div>
     </div>
 
