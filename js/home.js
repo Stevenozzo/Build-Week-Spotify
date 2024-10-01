@@ -4,6 +4,8 @@ const token = readCookie("SpotifyBearer");
 if (!token) {
   location.href = "/index.html";
 }
+const inputDiv = document.getElementById("search-toggle");
+const input = document.querySelector("*search-toggle > input");
 
 function searchArtistByName(artistName) {
   fetch(
@@ -52,48 +54,46 @@ function getArtistData(artistId) {
 const artistName = "Antonello Venditti";
 searchArtistByName(artistName);
 
-document
-  .getElementById("search-toggle")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
+document.addEventListener("click", function (event) {
+  event.preventDefault();
 
-    // Controlla se la card esiste già
-    const existingCard = document.querySelector(".card-dropdown");
-    if (!existingCard) {
-      // Creare una nuova card al click
-      const card = document.createElement("div");
-      card.classList.add("card-dropdown");
+  // Controlla se la card esiste già
+  const existingCard = document.querySelector(".card-dropdown");
+  if (!existingCard) {
+    // Creare una nuova card al click
+    const card = document.createElement("div");
+    card.classList.add("card-dropdown");
 
-      // Aggiunge il contenuto della card (opzioni di ricerca)
-      card.innerHTML = `
+    // Aggiunge il contenuto della card (opzioni di ricerca)
+    card.innerHTML = `
       <div class="card-dropdown-item" id="search-album">Album</div>
       <div class="card-dropdown-item" id="search-song">Canzoni</div>
       <div class="card-dropdown-item" id="search-artist">Autori</div>
     `;
 
-      // Aggiunge la card al body
-      document.body.appendChild(card);
+    // Aggiunge la card al body
+    document.body.appendChild(card);
 
-      // Posiziona sotto il pulsante "Cerca"
-      const rect = this.getBoundingClientRect();
-      card.style.top = `${rect.bottom}px`;
-      card.style.left = `${rect.left}px`;
+    // Posiziona sotto il pulsante "Cerca"
+    const rect = this.getBoundingClientRect();
+    card.style.top = `${rect.bottom}px`;
+    card.style.left = `${rect.left}px`;
 
-      // Mostra la card
-      card.style.display = "block";
+    // Mostra la card
+    card.style.display = "block";
 
-      // Chiude la card quando si clicca fuori
-      window.addEventListener("click", function (e) {
-        if (
-          !card.contains(e.target) &&
-          e.target !== document.getElementById("search-toggle")
-        ) {
-          card.remove();
-        }
-      });
+    // Chiude la card quando si clicca fuori
+    window.addEventListener("click", function (e) {
+      if (
+        !card.contains(e.target) &&
+        e.target !== document.getElementById("search-toggle")
+      ) {
+        card.remove();
+      }
+    });
 
-      // Eventi click sulle opzioni
-      document
+    // Eventi click sulle opzioni
+    /*document
         .getElementById("search-album")
         .addEventListener("click", function () {
           console.log("Ricerca Album");
@@ -109,6 +109,10 @@ document
         .getElementById("search-artist")
         .addEventListener("click", function () {
           console.log("Ricerca Autori");
-        });
-    }
+        });*/
+  }
+  console.log(inputDiv);
+  inputDiv.addEventListener("click", function () {
+    input.classList.toggle("hidden");
   });
+});
