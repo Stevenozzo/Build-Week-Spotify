@@ -3,7 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body class="flex">
+    <header class=""></header>
+    <main class="">
+      <div class="album-top-row flex align-center space-between">
+        <div class="flex">
+          <div class="left-arrow align-center text-center border-rounded square-30">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+          <div class="right-arrow align-center text-center border-rounded square-30">
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </div>
+        <div class="user-profile flex align-center text-center">
+          <img class="border-rounded" src="./assets/imgs/main/image-1.jpg" alt="user-img" width="30" />
+          <p>Michele Schettino</p>
+          <i class="fa-solid fa-caret-down"></i>
+        </div>
+      </div>
+      <div class="album-mid-row flex">
+        <img id="album-image" crossorigin="anonymous" src="https://i.scdn.co/image/ab67616d0000b2735b3cb5aa936655424de11fa2" alt="img-album" width="250px" />
+        <div>
+          <p>ALBUM</p>
+          <h1>Gioventù brucata</h1>
+          <div class="flex align-center">
+            <img class="border-rounded" src="./assets/imgs/main/image-12.jpg" alt="logo" width="30" />
+            <p>Pinguini Tattici Nucleari - 2017 - 12 brani, 53 min 20 sec.</p>
+          </div>
+        </div>
+      </div>
+      <div class="album-bottom-row">
+        <div>
+          <button type="button" class="play-btn border-rounded square-50"><i class="fa-solid fa-play" style="color: #000000"></i></button>
+          <button type="button" class="heart-btn square-30 border-0 bg-transparent"><i class="fa-regular fa-heart fa-2xl" style="color: #c9c6bc"></i></button>
+          <button type="button" class="download-btn square-30 border-0 bg-transparent">
+            <i class="fa-regular fa-circle-down fa-2xl" style="color: #c9c6bc"></i>
+          </button>
+          <button type="button" class="ellipsis-btn square-30 border-0 bg-transparent">
+            <i class="fa-solid fa-ellipsis fa-2xl" style="color: #c9c6bc"></i>
+          </button>
+        </div>
+      </div>
+      <div class="tracks">
+        <ul class="style-none">
+          <li>
+            <ul class="flex style-none space-between">
+              <li class="first-row">#TITOLO</li>
+              <li class="second-row">RIPRODUZIONI</li>
+              <li class="third-row"><i class="fa-regular fa-clock fa-lg bg-transparent" style="color: #c9c6bc"></i></li>
+            </ul>
+          </li>
+          <li class="flex space-between">
+            <div class="flex">
+              <p>2</p>
+              <div>
+                <p>Titolo</p>
+                <p>Artista</p>
+              </div>
+            </div>
+            <p>nr.riproduzioni</p>
+            <p>ore</p>
+          </li>
+          <li class="flex space-between">
+            <div class="flex">
+              <p>3</p>
+              <div>
+                <p>Titolo</p>
+                <p>Artista</p>
+              </div>
+            </div>
+            <p>nr.riproduzioni</p>
+            <p>ore</p>
+          </li>
+          <li class="flex space-between">
+            <div class="flex">
+              <p>1</p>
+              <div>
+                <p>Titolo</p>
+                <p>Artista</p>
+              </div>
+            </div>
+            <p>nr.riproduzioni</p>
+            <p>ore</p>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <footer class=""></footer>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"></script>
+  <script src="./script.js"></script>
 </html>
