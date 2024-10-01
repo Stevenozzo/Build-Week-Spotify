@@ -3,7 +3,7 @@ import { clientId, clientSecret, redirectUri, scope, apiUrlToken, authUrlBase } 
 function redirectToSpotifyLogin() {
   const authUrl = `${authUrlBase}?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
   console.log(authUrl);
-  // window.location.href = authUrl;
+  window.location.href = authUrl;
 }
 
 function handleSpotifyCallback() {

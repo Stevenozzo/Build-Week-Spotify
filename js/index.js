@@ -78,85 +78,85 @@ nextBtn.addEventListener("click", () => {
   // Implement next song functionality
 });*/
 
-const apiUrlBase = "https://accounts.spotify.com/api/token";
-const clientSecret = "5514452ad2a34ace9f586ac267d2c688";
-const clientId = "7b034cec707f4f8d90a0afdb115bd809";
+// const apiUrlBase = "https://accounts.spotify.com/api/token";
+// const clientSecret = "5514452ad2a34ace9f586ac267d2c688";
+// const clientId = "7b034cec707f4f8d90a0afdb115bd809";
 
-// Funzione per ottenere il token
-const getToken = async () => {
-  try {
-    const response = await fetch(apiUrlBase, {
-      method: "POST",
-      headers: {
-        Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
-      },
-      body: new URLSearchParams({
-        grant_type: "client_credentials",
-      }),
-    });
+// // Funzione per ottenere il token
+// const getToken = async () => {
+//   try {
+//     const response = await fetch(apiUrlBase, {
+//       method: "POST",
+//       headers: {
+//         Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
+//       },
+//       body: new URLSearchParams({
+//         grant_type: "client_credentials",
+//       }),
+//     });
 
-    const data = await response.json();
-    console.log("Access Token:", data.access_token);
-    return data.access_token; // Ritorna il token
-  } catch (error) {
-    console.error("Errore nell'ottenere il token:", error);
-  }
-};
+//     const data = await response.json();
+//     console.log("Access Token:", data.access_token);
+//     return data.access_token; // Ritorna il token
+//   } catch (error) {
+//     console.error("Errore nell'ottenere il token:", error);
+//   }
+// };
 
-// Funzione per ottenere i dati dell'artista
-const getArtistData = async (token) => {
-  const vendittiId = "2uYWxilOVlUdk4oV9DvwqK";
-  const apiUrlArtist = `https://api.spotify.com/v1/artists/${vendittiId}`;
+// // Funzione per ottenere i dati dell'artista
+// const getArtistData = async (token) => {
+//   const vendittiId = "2uYWxilOVlUdk4oV9DvwqK";
+//   const apiUrlArtist = `https://api.spotify.com/v1/artists/${vendittiId}`;
 
-  try {
-    const response = await fetch(apiUrlArtist, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+//   try {
+//     const response = await fetch(apiUrlArtist, {
+//       method: "GET",
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     });
 
-    if (!response.ok) {
-      throw new Error("Errore nella richiesta: " + response.statusText);
-    }
+//     if (!response.ok) {
+//       throw new Error("Errore nella richiesta: " + response.statusText);
+//     }
 
-    const data = await response.json();
-    console.log("Dati Artista:", data);
-  } catch (error) {
-    console.error("Errore nel recupero dei dati dell'artista:", error);
-  }
-};
+//     const data = await response.json();
+//     console.log("Dati Artista:", data);
+//   } catch (error) {
+//     console.error("Errore nel recupero dei dati dell'artista:", error);
+//   }
+// };
 
-// Funzione per ottenere i dati dell'album
-const getAlbumData = async (token) => {
-  const albumId = "2Cn1d2KgbkAqbZCJ1RzdkA";
-  const apiUrlAlbum = `https://api.spotify.com/v1/albums/${albumId}`;
+// // Funzione per ottenere i dati dell'album
+// const getAlbumData = async (token) => {
+//   const albumId = "2Cn1d2KgbkAqbZCJ1RzdkA";
+//   const apiUrlAlbum = `https://api.spotify.com/v1/albums/${albumId}`;
 
-  try {
-    const result = await fetch(apiUrlAlbum, {
-      method: "GET",
-      headers: { Authorization: "Bearer " + token },
-    });
+//   try {
+//     const result = await fetch(apiUrlAlbum, {
+//       method: "GET",
+//       headers: { Authorization: "Bearer " + token },
+//     });
 
-    if (!result.ok) {
-      throw new Error("Errore nella richiesta: " + result.status);
-    }
+//     if (!result.ok) {
+//       throw new Error("Errore nella richiesta: " + result.status);
+//     }
 
-    const data = await result.json();
-    console.log("Dati Album:", data);
-    return data;
-  } catch (error) {
-    console.error("Errore nel recupero dei dati dell'album:", error);
-  }
-};
+//     const data = await result.json();
+//     console.log("Dati Album:", data);
+//     return data;
+//   } catch (error) {
+//     console.error("Errore nel recupero dei dati dell'album:", error);
+//   }
+// };
 
-// Flusso principale
-const main = async () => {
-  const token = await getToken();
-  if (token) {
-    await getArtistData(token);
-    await getAlbumData(token);
-  }
-};
+// // Flusso principale
+// const main = async () => {
+//   const token = await getToken();
+//   if (token) {
+//     await getArtistData(token);
+//     await getAlbumData(token);
+//   }
+// };
 
-main();
+// main();
