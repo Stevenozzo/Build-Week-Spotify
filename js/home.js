@@ -1,14 +1,11 @@
 import { readCookie } from "./cookies.js";
 
-  const token = readCookie("SpotifyBearer");
-  if (!token) {
-    location.href = '/index.html'
-  }
-
-
+const token = readCookie("SpotifyBearer");
+if (!token) {
+  location.href = "/index.html";
+}
 
 function searchArtistByName(artistName) {
-
   fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
     method: "GET",
     headers: {
@@ -32,7 +29,6 @@ function searchArtistByName(artistName) {
 }
 
 function getArtistData(artistId) {
-
   fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
     method: "GET",
     headers: {
