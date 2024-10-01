@@ -17,7 +17,7 @@
     <div class="sidebar-left">
       <nav>
         <a href="#" class="active"><i>🏠</i> Home</a>
-        <a href="#"><i>🔍</i> Cerca</a>
+        <a href="#" id="search-toggle"><i>🔍</i> Cerca</a>
         <a href="#"><i>📚</i> La tua libreria</a>
         <a href="#"><i>➕</i> Crea playlist</a>
         <a href="#"><i>❤️</i> Brani che ti piacciono</a>
@@ -108,7 +108,14 @@
         <!-- Volume -->
         <div class="slider_container ms-3 d-flex align-items-center">
           <i class="fa fa-volume-down me-2"></i>
-          <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()" />
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="99"
+            class="volume_slider"
+            onchange="setVolume()"
+          />
           <i class="fa fa-volume-up ms-2"></i>
         </div>
       </div>
