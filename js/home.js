@@ -1,20 +1,13 @@
-function readCookie(nomecookie) {
-  let cookies = document.cookie.split(";");
-  for (let cookie of cookies) {
-    let [key, value] = cookie.split("=");
-    if (key.trim() === nomecookie) {
-      return value;
-    }
-  }
-  return null;
-}
+import { readCookie } from "./cookies.js";
 
-function searchArtistByName(artistName) {
   const token = readCookie("SpotifyBearer");
   if (!token) {
-    console.log("Token non trovato!");
-    return;
+    location.href = '/index.html'
   }
+
+
+
+function searchArtistByName(artistName) {
 
   fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
     method: "GET",
@@ -39,11 +32,6 @@ function searchArtistByName(artistName) {
 }
 
 function getArtistData(artistId) {
-  const token = readCookie("SpotifyBearer");
-  if (!token) {
-    console.log("Token non trovato!");
-    return;
-  }
 
   fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
     method: "GET",

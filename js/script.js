@@ -1,10 +1,6 @@
-import { clientId, clientSecret, redirectUri, scope, apiUrlToken, authUrlBase } from "./constants.js";
+import { clientId, clientSecret, redirectUri, apiUrlToken } from "./constants.js";
+import { writeCookie } from "./cookies.js";
 
-function redirectToSpotifyLogin() {
-  const authUrl = `${authUrlBase}?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
-  console.log("Auth URL:", authUrl);
-  window.location.href = authUrl;
-}
 
 function handleSpotifyCallback() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -43,15 +39,4 @@ function handleSpotifyCallback() {
   }
 }
 
-function writeCookie(nomecookie, valore) {
-  let now = new Date();
-  now.setHours(now.getHours() + 1);
-  const cookieString = `${nomecookie}=${valore}; expires=${now.toUTCString()}; path=/`;
-  document.cookie = cookieString;
-  console.log("Cookie scritto:", cookieString);
-  return cookieString;
-}
-console.log(writeCookie("BearerToken"));
-
-// redirectToSpotifyLogin();
 handleSpotifyCallback();
