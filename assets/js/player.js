@@ -16,7 +16,6 @@ if (!playlists) {
 localStorage.setItem("playlists", JSON.stringify([]));
 playlists = JSON.parse(localStorage.getItem("playlists"));
 playlists.push(JSON.stringify(likePlaylist));
-console.log(playlists);
 
 export function player() {
   const audio = document.getElementById("audio");
