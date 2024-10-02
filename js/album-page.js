@@ -1,4 +1,4 @@
-import { readCookie } from "./js/cookies.js";
+import { readCookie } from "./cookies.js";
 
 const token = readCookie("SpotifyBearer");
 if (!token) {
@@ -6,13 +6,11 @@ if (!token) {
 }
 
 
-// Function to get a parameter by name from the URL
 function getParamFromUrl(paramName) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(paramName);
 }
 
-// Example usage: Get the 'albumId' parameter from the URL
 const albumId = getParamFromUrl("albumId");
 const artistId = getParamFromUrl("artistId")
 console.log('Album ID:', albumId);
@@ -26,6 +24,7 @@ let artistName;
 let artistImage;
 let releaseDate;
 let albumImage;
+let totalDuration = 0;
 let albumTracks = [];
 
 
@@ -94,22 +93,19 @@ async function getAlbumTracks(Id) {
 }
 
 function renderAlbumTracks() {
-    const ulElement = document.getElementById("tracks-list"); // The <ul> element where the <li> elements will be appended
-
-    // Clear the existing content in the list (optional if you're updating the list multiple times)
+    const ulElement = document.getElementById("tracks-list");
     ulElement.innerHTML = "";
 
     albumTracks.forEach((track, index) => {
-        // Create a new <li> element
+
         const liElement = document.createElement("li");
         liElement.classList.add("flex", "space-between");
 
-        // Convert duration from milliseconds to minutes and seconds
+        totalDuration += track.duration;
+
         const minutes = Math.floor(track.duration / 60000);
         const seconds = ((track.duration % 60000) / 1000).toFixed(0);
-        // const formattedDuration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        // Set the HTML content for the <li> using template literals
         liElement.innerHTML = `
             <div class="flex width-40">
                 <p class="track-number">${index + 1}</p>
@@ -122,9 +118,13 @@ function renderAlbumTracks() {
             <p class="width-30 text-end">${minutes}h ${seconds}s</p> <!-- Custom time formatting -->
         `;
 
-        // Append the <li> to the <ul> list
         ulElement.appendChild(liElement);
     });
+
+    const totalMinutes = Math.floor(totalDuration / 60000);
+    const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
+    const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
+    totalDuration = formattedTotalDuration;
 }
 
 
@@ -135,6 +135,7 @@ let resutRelease = document.getElementById("release");
 let reusltTracksNr = document.getElementById("trackNr");
 let resultArtistImg = document.getElementById("artist-image");
 let resultTitle = document.getElementById("album-title");
+let reusltTotDur = document.getElementById("tot-duration");
 let pageContent = document.querySelector('main');
 
 async function populatePage() {
@@ -146,7 +147,7 @@ async function populatePage() {
     console.log("Release Date:", releaseDate);
     console.log("Album Image URL", albumImage);
     resultImage.src = albumImage;
-    import('./js/bg-gradient.js')
+    import('./bg-gradient.js')
         .then(() => {
         console.log('bg-gradient.js has been loaded');
         })
@@ -159,11 +160,13 @@ async function populatePage() {
     resutRelease.innerText = releaseDate;
     reusltTracksNr.innerText = `${albumTracks.length} brani`;
     resultTitle.innerText = albumName;
-
-
-
+    
     renderAlbumTracks();
-    pageContent.classList.remove("hidden");
+    reusltTotDur.innerText = totalDuration;
+
+    setTimeout(() => {
+        pageContent.classList.remove("hidden");
+    }, 100);
 
 
 }

@@ -3,12 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="./assets/css/album-page.css" />
     <title>Document</title>
   </head>
   <body class="flex">
-    <header class=""></header>
+    <header class="">
+      <div class="sidebar-left">
+        <nav>
+          <div class="dropdown">
+            <a href="#" id="search-toggle" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> <i>🔍</i> Cerca </a>
+            <div class="dropdown-menu p-2">
+              <div class="input-group">
+                <input type="text" id="search-bar" class="form-control" placeholder="Cerca" />
+                <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+              </div>
+              <a href="./album-page.html">Go to Album</a>
+            </div>
+          </div>
+
+          <div class="playlist">
+            <a href="#">early stage emily syndrome</a>
+            <a href="#">Be The Young</a>
+            <a href="#">saggio vibes 🎧🔥</a>
+            <a href="#">main character energy</a>
+            <a href="#">that fucking mood 🍸🎶</a>
+            <a href="#">VEE, CARLOTTA E GIACOMO VANNO A BOSIO</a>
+            <a href="#">An Emily Winchester kind of mood 🍸</a>
+            <a href="#">landing page</a>
+            <a href="#">2021 lol</a>
+            <a href="#">cosa cazzo vuol dire questa affermazione</a>
+            <a href="#">honey and glass</a>
+            <a href="#">(Revenge) Training Arc</a>
+            <a href="#">Lidia 🤝 Emily</a>
+            <a href="#">minecraft e nintendo switch</a>
+            <a href="#">silvano d'orba? I hardly know her</a>
+            <a href="#">Culo 2021</a>
+            <a href="#">Frah Quintale Mix</a>
+          </div>
+        </nav>
+      </div>
+    </header>
     <main class="hidden">
       <div class="album-top-row flex align-center space-between">
         <div class="flex">
@@ -26,20 +62,16 @@
         </div>
       </div>
       <div class="album-mid-row flex">
-        <img
-          id="album-image"
-          class=""
-          crossorigin="anonymous"
-          src="https://i.scdn.co/image/ab67616d0000b2735b3cb5aa936655424de11fa2"
-          alt="img-album"
-          width="250px"
-        />
+        <img id="album-image" class="" crossorigin="anonymous" src="" alt="img-album" width="250px" />
         <div class="align-end">
           <p>ALBUM</p>
           <h1 id="album-title">Gioventù brucata</h1>
           <div class="flex align-center">
             <img id="artist-image" class="border-rounded" src="./assets/imgs/main/image-12.jpg" alt="logo" width="30" />
-            <p><span id="artist-name">Pinguini Tattici Nucleari</span> - <span id="release">2017</span> - <span id="trackNr">12 brani</span>, 53 min 20 sec.</p>
+            <p>
+              <span id="artist-name">Pinguini Tattici Nucleari</span> - <span id="release">2017</span> - <span id="trackNr">12 brani</span>,
+              <span id="tot-duration">53 min 20 sec</span>.
+            </p>
           </div>
         </div>
       </div>
@@ -103,8 +135,39 @@
         </ul>
       </div>
     </main>
-    <footer class=""></footer>
+    <footer class="">
+      <div class="sidebar-right">
+        <h2>Attività amici</h2>
+
+        <div class="friend-activity">
+          <img src="https://via.placeholder.com/40" alt="Charlie Hookham" />
+          <div class="friend-activity-info">
+            <h4>Charlie Hookham</h4>
+            <p>In Camera - Yumi Zouma</p>
+          </div>
+          <div class="friend-activity-time">4 ore</div>
+        </div>
+
+        <div class="friend-activity">
+          <img src="https://via.placeholder.com/40" alt="lightdark02" />
+          <div class="friend-activity-info">
+            <h4>lightdark02</h4>
+            <p>Aimed to Kill - Jade LeMac</p>
+          </div>
+          <div class="friend-activity-time">8 ore</div>
+        </div>
+
+        <div class="friend-activity">
+          <img src="https://via.placeholder.com/40" alt="Valeria Traverso" />
+          <div class="friend-activity-info">
+            <h4>Valeria Traverso</h4>
+            <p>New Kings - Sleeping Wolf</p>
+          </div>
+          <div class="friend-activity-time">3 giorni</div>
+        </div>
+      </div>
+    </footer>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"></script>
-  <script type="module" src="./album-page.js"></script>
+  <script type="module" src="./js/album-page.js"></script>
 </html>
