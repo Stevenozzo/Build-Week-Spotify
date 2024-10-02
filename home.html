@@ -66,6 +66,33 @@
           bottom: 0 !important;
         }
       }
+      .playlist ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .playlist li {
+        margin: 8px 0;
+      }
+
+      .playlist a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .playlist a:hover {
+        color: #1db954; /* Verde Spotify */
+        transform: scale(
+          1.05
+        ); /* Leggero ingrandimento al passaggio del mouse */
+      }
+
+      .playlist a:active {
+        color: #1db954;
+      }
     </style>
   </head>
 
