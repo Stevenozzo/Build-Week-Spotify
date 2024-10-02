@@ -59,7 +59,7 @@ function getArtistData(artistId) {
         liLista.style.cursor = "pointer";
         liLista.addEventListener("click", () => {
           // Redirect to album-page.html with the albumId as a URL parameter
-          window.location.href = `album-page.html?albumId=${albumId}`;
+          window.location.href = `album-page.html?artistId=${artistId}&albumId=${albumId}`;
         });
 
         listaAlbum.appendChild(liLista);

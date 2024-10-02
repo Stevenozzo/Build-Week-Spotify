@@ -16,6 +16,12 @@
 .align-center {
     align-items: center;
 }
+.align-end {
+    align-items: end;
+}
+.align-start {
+    align-items: start;
+}
 .justify-center {
     justify-content: center;
 }
@@ -27,6 +33,9 @@
 }
 .text-center {
     text-align: center;
+}
+.text-end {
+    text-align: end;
 }
 .border-rounded {
     border-radius: 50%;
@@ -48,7 +57,12 @@
 .style-none {
     list-style: none;
 }
-
+.width-40 {
+    width: 40%;
+}
+.width-30 {
+    width: 30%;
+}
 
 /* Other rules */
 
@@ -116,7 +130,6 @@ main {
 }
 
 .album-mid-row {
-    align-items: end;
     padding: 1rem 2rem 2rem;
 
 }
@@ -130,6 +143,11 @@ main {
     font-size: 5rem;
     line-height: 1;
     margin-bottom: 2rem;
+}
+
+.album-mid-row > img {
+    align-self: start;
+    height: auto;
 }
 
 .album-mid-row > div img {
@@ -160,6 +178,10 @@ main {
 }
 .tracks {
     padding: 2rem;
+}
+
+.track-number {
+    color: red;
 }
 
 footer {

@@ -26,13 +26,20 @@
         </div>
       </div>
       <div class="album-mid-row flex">
-        <img id="album-image" crossorigin="anonymous" src="https://i.scdn.co/image/ab67616d0000b2735b3cb5aa936655424de11fa2" alt="img-album" width="250px" />
-        <div>
+        <img
+          id="album-image"
+          class=""
+          crossorigin="anonymous"
+          src="https://i.scdn.co/image/ab67616d0000b2735b3cb5aa936655424de11fa2"
+          alt="img-album"
+          width="250px"
+        />
+        <div class="align-end">
           <p>ALBUM</p>
-          <h1>Gioventù brucata</h1>
+          <h1 id="album-title">Gioventù brucata</h1>
           <div class="flex align-center">
-            <img class="border-rounded" src="./assets/imgs/main/image-12.jpg" alt="logo" width="30" />
-            <p>Pinguini Tattici Nucleari - 2017 - 12 brani, 53 min 20 sec.</p>
+            <img id="artist-image" class="border-rounded" src="./assets/imgs/main/image-12.jpg" alt="logo" width="30" />
+            <p><span id="artist-name">Pinguini Tattici Nucleari</span> - <span id="release">2017</span> - <span id="trackNr">12 brani</span>, 53 min 20 sec.</p>
           </div>
         </div>
       </div>
@@ -52,12 +59,15 @@
         <ul class="style-none">
           <li>
             <ul class="flex style-none space-between">
-              <li class="first-row">#TITOLO</li>
-              <li class="second-row">RIPRODUZIONI</li>
-              <li class="third-row"><i class="fa-regular fa-clock fa-lg bg-transparent" style="color: #c9c6bc"></i></li>
+              <li class="first-row width-40">#TITOLO</li>
+              <li class="second-row width-30 text-end">RIPRODUZIONI</li>
+              <li class="third-row width-30 text-end"><i class="fa-regular fa-clock fa-lg bg-transparent" style="color: #c9c6bc"></i></li>
             </ul>
           </li>
-          <li class="flex space-between">
+          <li>
+            <ul id="tracks-list"></ul>
+          </li>
+          <!-- <li class="flex space-between">
             <div class="flex">
               <p>2</p>
               <div>
@@ -65,7 +75,7 @@
                 <p>Artista</p>
               </div>
             </div>
-            <p>nr.riproduzioni</p>
+            <p>durata</p>
             <p>ore</p>
           </li>
           <li class="flex space-between">
@@ -79,8 +89,8 @@
             <p>nr.riproduzioni</p>
             <p>ore</p>
           </li>
-          <li class="flex space-between">
-            <div class="flex">
+          <li class="flex space-between"> -->
+          <!-- <div class="flex">
               <p>1</p>
               <div>
                 <p>Titolo</p>
@@ -89,13 +99,12 @@
             </div>
             <p>nr.riproduzioni</p>
             <p>ore</p>
-          </li>
+          </li> -->
         </ul>
       </div>
     </main>
     <footer class=""></footer>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"></script>
-  <script src="./js/bg-gradient.js"></script>
   <script type="module" src="./album-page.js"></script>
 </html>
