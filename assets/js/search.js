@@ -230,7 +230,7 @@ function buildAlbumItems(dati) {
                </button>
             </div>
             <div class="col-5 col-lg-5 d-flex flex-column justify-content-center">
-                <p class="mb-0"><a href="./albumDetails.html?albumId=${item.id}" class="text-light text-decoration-none title" >${item.name}</a> </p>
+                <p class="mb-0"><a href="./album-page.html?albumId=${item.id}" class="text-light text-decoration-none title" >${item.name}</a> </p>
                 <p class="mb-0 opacity-50"><a href="./artist.html?artistId=${item.artists[0].id}" class="text-light text-decoration-none">${
       item.artists[0].name
     }</a></p>
