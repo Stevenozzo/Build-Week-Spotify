@@ -16,12 +16,15 @@
     <!-- scheletro sidebar sinistra -->
     <div class="sidebar-left">
       <nav>
-        <a href="#" class="active"><i>🏠</i> Home</a>
-        <a href="#"><i>🔍</i> Cerca</a>
-        <a href="#"><i>📚</i> La tua libreria</a>
-        <a href="#"><i>➕</i> Crea playlist</a>
-        <a href="#"><i>❤️</i> Brani che ti piacciono</a>
-        <a href="#"><i>🎧</i> I tuoi episodi</a>
+        <div class="dropdown">
+          <a href="#" id="search-toggle" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> <i>🔍</i> Cerca </a>
+          <div class="dropdown-menu p-2">
+            <div class="input-group">
+              <input type="text" id="search-bar" class="form-control" placeholder="Cerca" />
+              <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+            </div>
+          </div>
+        </div>
 
         <div class="playlist">
           <a href="#">early stage emily syndrome</a>
@@ -41,92 +44,14 @@
           <a href="#">silvano d'orba? I hardly know her</a>
           <a href="#">Culo 2021</a>
           <a href="#">Frah Quintale Mix</a>
-          <!-- testo placeholder.... -->
         </div>
       </nav>
     </div>
 
+    <!-- main -->
     <div class="main-content">
-      <!-- contenitore 1 -->
-      <div class="album-details">
-        <img src="https://via.placeholder.com/150" alt="Album Cover" />
-        <div class="album-info">
-          <h1>Album Title (feat. Artist)</h1>
-          <p>Ascolta il nuovo singolo di Artist & Guest!</p>
-          <div class="album-buttons">
-            <button>Play</button>
-            <button>Salva</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- contenitore 2 -->
-      <div class="buonasera-section">
-        <h2>Buonasera</h2>
-        <div class="buonasera-cards">
-          <!-- prima riga -->
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 1 Title</p>
-          </div>
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 2 Title</p>
-          </div>
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 3 Title</p>
-          </div>
-          <!-- dovrebbe apparire in seconda riga -->
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 4 Title</p>
-          </div>
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 5 Title</p>
-          </div>
-          <div class="buonasera-card">
-            <img src="https://via.placeholder.com/80" alt="Card Image" />
-            <p>Card 6 Title</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- tewrzo contenitore -->
-      <div class="altro-section">
-        <div class="altro-section-header">
-          <h2>Altro di ciò che ti piace</h2>
-          <a href="#" class="visualizza-altro">VISUALIZZA TUTTO</a>
-        </div>
-        <div class="altro-cards">
-          <div class="altro-card">
-            <img src="https://picsum.photos/500/500" alt="Playlist Cover" />
-            <p>Playlist Title</p>
-            <p class="author">by Artist</p>
-          </div>
-          <div class="altro-card">
-            <img src="https://via.placeholder.com/150" alt="Playlist Cover" />
-            <p>Playlist Title</p>
-            <p class="author">by Artist</p>
-          </div>
-          <div class="altro-card">
-            <img src="https://via.placeholder.com/150" alt="Playlist Cover" />
-            <p>Playlist Title</p>
-            <p class="author">by Artist</p>
-          </div>
-          <div class="altro-card">
-            <img src="https://via.placeholder.com/150" alt="Playlist Cover" />
-            <p>Playlist Title</p>
-            <p class="author">by Artist</p>
-          </div>
-          <div class="altro-card">
-            <img src="https://via.placeholder.com/150" alt="Playlist Cover" />
-            <p>Playlist Title</p>
-            <p class="author">by Artist</p>
-          </div>
-        </div>
-      </div>
+      <h1>Spotify Layout</h1>
+      <p>Benvenuto nella tua app di musica preferita!</p>
     </div>
 
     <!-- scheletro sidebar destro -->
@@ -163,19 +88,18 @@
       <!-- aggiungere altro x testare scroll -->
     </div>
 
+    <!-- Music Player -->
     <div id="music-player">
+      <!-- Song Info -->
       <div class="song-info">
-        <img
-          id="album-cover"
-          src="https://source.unsplash.com/50x50/?music"
-          alt="Album Cover"
-        />
+        <img id="album-cover" src="" alt="Album Cover" />
         <div>
           <strong id="song-title"></strong><br />
           <span id="song-artist"></span>
         </div>
       </div>
 
+      <!-- Player Controls -->
       <div class="controls d-flex align-items-center">
         <div class="player-buttons">
           <button id="prev-btn">⏮️</button>
@@ -184,19 +108,15 @@
           <button id="next-btn">⏭️</button>
         </div>
 
+        <!-- Volume -->
         <div class="slider_container ms-3 d-flex align-items-center">
           <i class="fa fa-volume-down me-2"></i>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="99"
-            class="volume_slider"
-            onchange="setVolume()"
-          />
+          <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()" />
           <i class="fa fa-volume-up ms-2"></i>
         </div>
       </div>
+
+      <!-- Progress Bar -->
       <div class="progress-container">
         <span class="time" id="current-time">0:00</span>
         <div class="progress-bar">
@@ -212,6 +132,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="./js/index.js"></script>
+    <script type="module" src="./js/script.js"></script>
+    <script type="module" src="./js/home.js"></script>
   </body>
 </html>
