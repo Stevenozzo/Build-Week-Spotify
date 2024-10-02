@@ -1,4 +1,5 @@
 import { readCookie } from "./cookies.js";
+const artistName = "Antonello Venditti";
 
 const token = readCookie("SpotifyBearer");
 if (!token) {
@@ -6,12 +7,17 @@ if (!token) {
 }
 
 function searchArtistByName(artistName) {
-  fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  fetch(
+    `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+      artistName
+    )}&type=artist`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       if (data.artists && data.artists.items.length > 0) {
@@ -20,7 +26,7 @@ function searchArtistByName(artistName) {
         console.log("Artista trovato:", artist);
 
         getArtistData(artist.id);
-        getalbums(artist.id);
+        getAlbums(artist.id);
       } else {
         console.log("Artista non trovato.");
       }
@@ -29,49 +35,25 @@ function searchArtistByName(artistName) {
       console.log("Errore nella ricerca dell'artista:", error);
     });
 }
-let albums = [];
-let albumTracks = [];
-const imgAlbum = document.getElementById("imgAlbum").src;
 
 function getArtistData(artistId) {
-  fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-  .then((response) => response.json())
-  .then((data) => {
-    albums.push(data);
-    // console.log(albums[0].items[0].img[0].url);
-    // console.log(albums[0].items[0])
-    data.items.forEach((album) => {
-      let albums = album.id;
-      fetch(`https://api.spotify.com/v1/albums/${albums}/tracks`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((totBrani) => totBrani.json())
-      .then((brani)=> {
-        albumTracks.push(brani);
-        // console.log(brani);
-        
-      })
-      
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Dati dell'artista:", data);
+      if (data.tracks && data.tracks.length > 0) {
+        playTrack(data.tracks[0].uri);
+      }
     })
-    console.log("Dati dell'artista:", data);
-  })
-  .catch((error) => {
-    console.log("Errore nella richiesta dell'artista:", error);
-  });
+    .catch((error) => {
+      console.log("Errore nella richiesta dell'artista:", error);
+    });
 }
-
-console.log(albums);
-console.log(albumTracks);
-
-// console.log(albums[0].items[0])
 
 const searchBar = document.getElementById("search-bar");
 const searchButton = document.getElementById("search-button");
@@ -81,9 +63,82 @@ searchButton.addEventListener("click", function () {
   searchArtistByName(artistName);
 });
 
-const getalbums = (artist) => {
-  fetch();
+// Funzione per ottenere gli album dell'artista
+function getAlbums(artistId) {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Album dell'artista:", data);
+    })
+    .catch((error) => {
+      console.log("Errore nel recupero degli album:", error);
+    });
+}
+
+let player;
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  player = new Spotify.Player({
+    name: "Web Playback SDK Quick Start Player",
+    getOAuthToken: (cb) => {
+      cb(token);
+    },
+    volume: 0.5,
+  });
+  function pippo(player) {
+    console.log("Player pronto con Device ID", player);
+  }
 };
 
-// const artistName = "Antonello Venditti";
-// searchArtistByName(artistName);
+player.addListener("ready", ({ player }) => {
+  setInterval(pippo(player), 3000);
+});
+player.addListener("not_ready", ({ device_id }) => {
+  console.log("Player non pronto con Device ID", device_id);
+});
+
+player.addListener("initialization_error", ({ message }) => {
+  console.error(message);
+});
+
+player.addListener("authentication_error", ({ message }) => {
+  console.error(message);
+});
+
+player.addListener("account_error", ({ message }) => {
+  console.error(message);
+});
+
+player.addListener("playback_error", ({ message }) => {
+  console.error(message);
+});
+
+player.connect();
+
+function playTrack(uri) {
+  fetch(`https://api.spotify.com/v1/me/player/play`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ uris: [uri] }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Brano in riproduzione:", uri);
+      } else {
+        console.error("Errore nella riproduzione del brano");
+      }
+    })
+    .catch((error) => {
+      console.error("Errore nel tentativo di riprodurre il brano:", error);
+    });
+}
+
+searchArtistByName(artistName);
