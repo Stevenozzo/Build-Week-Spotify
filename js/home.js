@@ -16,9 +16,11 @@ function searchArtistByName(artistName) {
     .then((data) => {
       if (data.artists && data.artists.items.length > 0) {
         const artist = data.artists.items[0];
+        console.log(data);
         console.log("Artista trovato:", artist);
 
         getArtistData(artist.id);
+        getalbums(artist.id);
       } else {
         console.log("Artista non trovato.");
       }
@@ -29,7 +31,7 @@ function searchArtistByName(artistName) {
 }
 
 function getArtistData(artistId) {
-  fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -51,6 +53,10 @@ searchButton.addEventListener("click", function () {
   const artistName = searchBar.value;
   searchArtistByName(artistName);
 });
+
+const getalbums = (artist) => {
+  fetch();
+};
 
 // const artistName = "Antonello Venditti";
 // searchArtistByName(artistName);
