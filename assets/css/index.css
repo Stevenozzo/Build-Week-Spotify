@@ -182,29 +182,6 @@ body {
   color: #1db954;
 }
 
-.card-dropdown {
-  display: none;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  width: 250px;
-  padding: 15px;
-  background-color: #181818;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  z-index: 1;
-}
-
-.card-dropdown-item {
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #181818;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.card-dropdown-item:hover {
-  background-color: #e0e0e0;
-  color: #181818;
+#search-bar {
+  font-size: 0.8rem;
 }
