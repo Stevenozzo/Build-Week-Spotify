@@ -1,11 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Sidebar spotify</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex; /*aggiungo flex come chiesto*/
+        height: 100vh;
+        background-color: #181818;
+      }
+
+      /* sidebar di sinistra */
+      .sidebar-left {
+        width: 20%; /* imposto larghezza come indicazione */
+        background-color: #121212;
+        color: #b3b3b3;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100vh;
+        overflow-y: auto; /* fa in modo che in eccesso di contenuto appaia la scrollbar */
+      }
+
+      .sidebar-left a {
+        color: #b3b3b3;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .sidebar-left a:hover {
+        color: #fff;
+      }
+
+      .sidebar-left .playlist {
+        margin-top: 20px;
+        border-top: 1px solid #282828;
+        padding-top: 20px;
+      }
+
+      .playlist a {
+        font-size: 14px;
+      }
+
+      /* ho usato icone placeholder */
+      .sidebar-left i {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+
+      .sidebar-left a.active {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      /* Contenuto principale */
+      .main-content {
+        width: 65%; /*larghezza richiesta*/
+        background-color: #181818;
+        color: #fff;
+        padding: 20px;
+      }
+
+      /* navbar di sinistra */
+      .sidebar-right {
+        width: 15%; /*larghezza richiesta*/
+        background-color: #121212;
+        color: #b3b3b3;
+        padding: 20px;
+        height: 100vh;
+        overflow-y: auto; /*aggiunge scrollbar*/
+      }
+
+      .sidebar-right h2 {
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .friend-activity {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .friend-activity img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .friend-activity-info {
+        flex-grow: 1;
+      }
+
+      .friend-activity-info h4 {
+        margin: 0;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .friend-activity-info p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        color: #b3b3b3;
+      }
+
+      .friend-activity-time {
+        font-size: 12px;
+        color: #b3b3b3;
+      }
+    </style>
   </head>
   <body>
-    <h1>AAA</h1>
+    <!-- scheletro sidebar sinistra -->
+    <div class="sidebar-left">
+      <nav>
+        <a href="#" class="active"><i>🏠</i> Home</a>
+        <a href="#"><i>🔍</i> Cerca</a>
+        <a href="#"><i>📚</i> La tua libreria</a>
+        <a href="#"><i>➕</i> Crea playlist</a>
+        <a href="#"><i>❤️</i> Brani che ti piacciono</a>
+        <a href="#"><i>🎧</i> I tuoi episodi</a>
+
+        <div class="playlist">
+          <a href="#">early stage emily syndrome</a>
+          <a href="#">Be The Young</a>
+          <a href="#">saggio vibes 🎧🔥</a>
+          <a href="#">main character energy</a>
+          <a href="#">that fucking mood 🍸🎶</a>
+          <a href="#">VEE, CARLOTTA E GIACOMO VANNO A BOSIO</a>
+          <a href="#">An Emily Winchester kind of mood 🍸</a>
+          <a href="#">landing page</a>
+          <a href="#">2021 lol</a>
+          <a href="#">cosa cazzo vuol dire questa affermazione</a>
+          <a href="#">honey and glass</a>
+          <a href="#">(Revenge) Training Arc</a>
+          <a href="#">Lidia 🤝 Emily</a>
+          <a href="#">minecraft e nintendo switch</a>
+          <a href="#">silvano d'orba? I hardly know her</a>
+          <a href="#">Culo 2021</a>
+          <a href="#">Frah Quintale Mix</a>
+          <!-- testo placeholder.... -->
+        </div>
+      </nav>
+    </div>
+
+    <!-- main -->
+    <div class="main-content">
+      <h1>Spotify Layout</h1>
+      <p>Benvenuto nella tua app di musica preferita!</p>
+    </div>
+
+    <!-- scheletro sidebar destro -->
+    <div class="sidebar-right">
+      <h2>Attività amici</h2>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="Charlie Hookham" />
+        <div class="friend-activity-info">
+          <h4>Charlie Hookham</h4>
+          <p>In Camera - Yumi Zouma</p>
+        </div>
+        <div class="friend-activity-time">4 ore</div>
+      </div>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="lightdark02" />
+        <div class="friend-activity-info">
+          <h4>lightdark02</h4>
+          <p>Aimed to Kill - Jade LeMac</p>
+        </div>
+        <div class="friend-activity-time">8 ore</div>
+      </div>
+
+      <div class="friend-activity">
+        <img src="https://via.placeholder.com/40" alt="Valeria Traverso" />
+        <div class="friend-activity-info">
+          <h4>Valeria Traverso</h4>
+          <p>New Kings - Sleeping Wolf</p>
+        </div>
+        <div class="friend-activity-time">3 giorni</div>
+      </div>
+
+      <!-- aggiungere altro x testare scroll -->
+    </div>
   </body>
 </html>
