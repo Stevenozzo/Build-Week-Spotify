@@ -135,7 +135,7 @@ let resutRelease = document.getElementById("release");
 let reusltTracksNr = document.getElementById("trackNr");
 let resultArtistImg = document.getElementById("artist-image");
 let resultTitle = document.getElementById("album-title");
-
+let pageContent = document.querySelector('main');
 
 async function populatePage() {
     await getAlbumInfo(albumId);
@@ -163,7 +163,7 @@ async function populatePage() {
 
 
     renderAlbumTracks();
-    
+    pageContent.classList.remove("hidden");
 
 
 }

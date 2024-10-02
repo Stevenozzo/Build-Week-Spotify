@@ -63,7 +63,9 @@
 .width-30 {
     width: 30%;
 }
-
+.hidden {
+    visibility: hidden;
+}
 /* Other rules */
 
 body {
@@ -71,6 +73,7 @@ body {
     width: 100%;
     font-family: 'Circular', sans-serif;
     color: white;
+    background-color: #000000;
 }
 
 header {
