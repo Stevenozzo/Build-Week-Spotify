@@ -1,13 +1,10 @@
+import { clientId, clientSecret, redirectUri, scope, apiUrlToken, authUrlBase } from "./modules/constants.js";
 const token = localStorage.getItem("access_token");
 
 const userId = "qpkkldz3mipajti4lw070gfhl";
 const scopes = encodeURIComponent(
   "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
 );
-
-const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&response_type=token&redirect_uri=${encodeURIComponent(
-  "http://127.0.0.1:5501/auth.html"
-)}&scope=${scopes}`;
 
 if (!token) {
   location.href = "/login.html";
@@ -114,6 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (token) {
   } else {
-    window.location.href = authUrl;
+    window.location.href = authUrlBase;
   }
 });

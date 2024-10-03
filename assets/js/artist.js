@@ -1,6 +1,5 @@
-import { readCookie } from "../../js/cookies.js";
-
-const token = readCookie("SpotifyBearer");
+const token = localStorage.getItem("access_token");
+console.log(token);
 if (!token) {
   location.href = "/index.html";
 }
@@ -72,3 +71,62 @@ const getImageUrl = (data) => {
   div.appendChild(h2);
 };
 getArtistData();
+
+function getFirstTrackId(artistName) {
+  const token = localStorage.getItem("access_token"); // Assicurati di avere un token di accesso valido
+
+  // Passo 1: Trova l'artista usando il suo nome
+  fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((searchData) => {
+      if (searchData.artists.items.length === 0) {
+        console.error("Nessun artista trovato con questo nome.");
+        return null;
+      }
+
+      const artistId = searchData.artists.items[0].id; // Ottieni l'ID del primo artista trovato
+
+      // Passo 2: Ottieni le tracce dell'artista
+      return fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    })
+    .then((tracksResponse) => {
+      if (!tracksResponse) return; // Se non ci sono tracce, esci
+      return tracksResponse.json();
+    })
+    .then((tracksData) => {
+      if (tracksData.tracks.length === 0) {
+        console.error("Nessuna traccia trovata per questo artista.");
+        return null;
+      }
+
+      const firstTrackId = tracksData.tracks[1].id; // Ottieni l'ID della prima traccia
+      console.log("ID della prima traccia:", firstTrackId);
+      return firstTrackId;
+    })
+    .catch((error) => {
+      console.error("Errore:", error);
+    });
+}
+
+// Esempio di utilizzo
+getFirstTrackId(artistName);
+
+fetch("https://api.spotify.com/v1/me", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+}).then((response) => {
+  if (response.ok) {
+    console.log("Token valido.");
+  }
+});
