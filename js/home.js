@@ -70,7 +70,13 @@ function getAlbums(artistId) {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Errore nel recupero degli album");
+      }
+    })
     .then((data) => {
       console.log("Album dell'artista:", data);
     })
@@ -78,6 +84,8 @@ function getAlbums(artistId) {
       console.log("Errore nel recupero degli album:", error);
     });
 }
+
+let createdPlaylistId; // Variabile per memorizzare l'ID della playlist
 
 function createPlaylist() {
   fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
@@ -101,6 +109,32 @@ function createPlaylist() {
     })
     .then((data) => {
       console.log("Playlist creata con successo:", data);
+      createdPlaylistId = data.id; // Salva l'ID della playlist
+      console.log("ID Playlist creata:", createdPlaylistId); // Stampa l'ID per verifica
+      checkPlaylist(createdPlaylistId); // Chiama la funzione per controllare la playlist
+    })
+    .catch((error) => {
+      console.log("Errore:", error);
+    });
+}
+
+// Funzione per controllare se la playlist è stata creata
+function checkPlaylist(playlistId) {
+  fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Errore durante il recupero della playlist");
+      }
+    })
+    .then((data) => {
+      console.log("Dettagli della playlist:", data);
     })
     .catch((error) => {
       console.log("Errore:", error);
@@ -114,4 +148,5 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const artistInput = artistInputField.value;
   console.log("Valore al clic:", artistInput);
+  createPlaylist(); // Assicurati di chiamare createPlaylist qui se vuoi creare la playlist al submit del form
 });
