@@ -59,21 +59,21 @@ function getArtistData(artistId) {
 // });
 
 // Funzione per ottenere gli album dell'artista
-// function getAlbums(artistId) {
-//   fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log("Album dell'artista:", data);
-//     })
-//     .catch((error) => {
-//       console.log("Errore nel recupero degli album:", error);
-//     });
-// }
+function getAlbums(artistId) {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Album dell'artista:", data);
+    })
+    .catch((error) => {
+      console.log("Errore nel recupero degli album:", error);
+    });
+}
 
 // let player;
 
@@ -113,4 +113,127 @@ function getCurrentlyPlayingTrack() {
     .catch((error) => console.log("Errore nel caricamento della traccia:", error));
 }
 
-searchArtistByName(artistName);
+// Controlli per play/pausa/skip
+// document.getElementById("play-btn").addEventListener("click", () => {
+//   fetch(`https://api.spotify.com/v1/me/player/play`, {
+//     method: "PUT",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   })
+//     .then(() => {
+//       document.getElementById("play-btn").style.display = "none";
+//       document.getElementById("pause-btn").style.display = "inline";
+//     })
+//     .catch((error) => console.log("Errore nel riprodurre la traccia:", error));
+// });
+
+// document.getElementById("pause-btn").addEventListener("click", () => {
+//   fetch(`https://api.spotify.com/v1/me/player/pause`, {
+//     method: "PUT",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   })
+//     .then(() => {
+//       document.getElementById("play-btn").style.display = "inline";
+//       document.getElementById("pause-btn").style.display = "none";
+//     })
+//     .catch((error) => console.log("Errore nel mettere in pausa la traccia:", error));
+// });
+
+// Aggiungi controlli per "avanti" e "indietro" in modo simile
+
+// player.addListener("ready", ({ player }) => {
+//   setInterval(pippo(player), 3000);
+// });
+// player.addListener("not_ready", ({ device_id }) => {
+//   console.log("Player non pronto con Device ID", device_id);
+// });
+
+// player.addListener("initialization_error", ({ message }) => {
+//   console.error(message);
+// });
+
+// player.addListener("authentication_error", ({ message }) => {
+//   console.error(message);
+// });
+
+// player.addListener("account_error", ({ message }) => {
+//   console.error(message);
+// });
+
+// player.addListener("playback_error", ({ message }) => {
+//   console.error(message);
+// });
+
+// player.connect();
+
+// function playTrack(uri) {
+//   fetch(`https://api.spotify.com/v1/me/player/play`, {
+//     method: "PUT",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ uris: [uri] }),
+//   })
+//     .then((response) => {
+//       if (response.ok) {
+//         console.log("Brano in riproduzione:", uri);
+//       } else {
+//         console.error("Errore nella riproduzione del brano");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Errore nel tentativo di riprodurre il brano:", error);
+//     });
+// }
+
+// searchArtistByName(artistName);
+
+const userId = "qpkkldz3mipajti4lw070gfhl";
+const scopes = encodeURIComponent(
+  "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
+);
+
+const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&response_type=token&redirect_uri=${encodeURIComponent(
+  "http://127.0.0.1:5501/auth.html"
+)}&scope=${scopes}`;
+
+// creo playlist
+function createPlaylist() {
+  fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: "New Playlist",
+      description: "playlist creata tramite l'API di Spotify",
+      public: false,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Errore durante la creazione della playlist");
+      }
+    })
+    .then((data) => {
+      console.log("Playlist creata con successo:", data);
+    })
+    .catch((error) => {
+      console.log("Errore:", error);
+    });
+}
+
+window.onload = () => {
+  if (token) {
+    createPlaylist();
+  } else {
+    window.location.href = authUrl;
+  }
+};

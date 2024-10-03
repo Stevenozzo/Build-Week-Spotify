@@ -202,7 +202,7 @@ function builArtistItems(dati) {
                     <div class="col-1 opacity-50">${i + 1}</div>
                     <div class="col-1"><img src="${item.images[0].url}" alt="artista" class="w-100 rounded-3"></div>
                     <div class="col-7 d-flex flex-column justify-content-center">
-                         <p class="mb-0 "><a href="./artist.html?artistId=${item.id}" class="text-light text-decoration-none">${item.name}</a></p>
+                         <p class="mb-0 "><a href="./artist.html?artistName=${item.name}" class="text-light text-decoration-none">${item.name}</a></p>
                     </div>
                 </div>
         `;
