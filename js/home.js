@@ -1,10 +1,21 @@
 import { clientId, clientSecret, redirectUri, scope, apiUrlToken, authUrlBase } from "./modules/constants.js";
 const token = localStorage.getItem("access_token");
-
-const userId = "qpkkldz3mipajti4lw070gfhl";
-const scopes = encodeURIComponent(
-  "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
-);
+const userId = 1196612033;
+// function getUserId(token) {
+//   fetch("https://api.spotify.com/v1/me", {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       userId = data.id; // Qui hai l'User ID
+//       console.log("User ID:", userId);
+//     })
+//     .catch((error) => console.error("Errore nel recupero dell'User ID:", error));
+// }
+// getUserId(token);
 
 if (!token) {
   location.href = "/login.html";

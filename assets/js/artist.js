@@ -73,8 +73,6 @@ const getImageUrl = (data) => {
 getArtistData();
 
 function getFirstTrackId(artistName) {
-  const token = localStorage.getItem("access_token"); // Assicurati di avere un token di accesso valido
-
   // Passo 1: Trova l'artista usando il suo nome
   fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
     method: "GET",
@@ -130,3 +128,13 @@ fetch("https://api.spotify.com/v1/me", {
     console.log("Token valido.");
   }
 });
+
+fetch("https://api.spotify.com/v1/me/player/devices", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Dispositivi attivi:", data.devices);
+  });
