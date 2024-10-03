@@ -1,6 +1,10 @@
 import { readCookie } from "./cookies.js";
 
 const token = readCookie("SpotifyBearer");
+if (token) {
+} else {
+  window.location.href = authUrl;
+}
 
 const userId = "qpkkldz3mipajti4lw070gfhl";
 const scopes = encodeURIComponent(
@@ -103,19 +107,11 @@ function createPlaylist() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("saveList").addEventListener("click", () => {
-    const artistInput = document.getElementById("textInput").value;
-    if (artistInput) {
-      searchArtistByName(artistInput);
-      createPlaylist();
-    } else {
-      console.log("Inserisci un nome artista.");
-    }
-  });
+const form = document.getElementById("form");
+form.addEventListener("submit", (e) => {
+  const artistInputField = document.getElementById("textInput");
 
-  if (token) {
-  } else {
-    window.location.href = authUrl;
-  }
+  e.preventDefault();
+  const artistInput = artistInputField.value;
+  console.log("Valore al clic:", artistInput);
 });

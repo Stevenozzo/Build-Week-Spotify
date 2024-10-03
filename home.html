@@ -283,14 +283,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="/submit" method="post">
+            <form action="/submit" method="post" id="form">
               <label for="textInput">Inserisci il nome della playlist:</label>
               <input type="text" id="textInput" name="textInput" required />
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="submit" class="btn btn-primary" id="saveList">Salva playlist</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-            <button type="button" class="btn btn-primary" id="saveList">Salva playlist</button>
           </div>
         </div>
       </div>
