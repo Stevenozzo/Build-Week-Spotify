@@ -198,6 +198,10 @@
 }
 
 /* Paddings */
+.py-05 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
 .py-1 {
     padding-top: 1rem;
     padding-bottom: 1rem;

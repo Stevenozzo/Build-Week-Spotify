@@ -26,17 +26,12 @@ const extractColor = (image) => {
             const dominantColor = palette.Vibrant ? palette.Vibrant.hex : "#000";
             console.log(`Dominant color: ${dominantColor}`);
             
-            // Darken the dominant color
+            // Darken the dominant color (e.g., 0.5 for 50% darker)
             const darkerColor = darkenColor(dominantColor, 0.5);
             console.log(`Darker color: ${darkerColor}`);
             
-            // document.body.style.background = `linear-gradient(to bottom, ${darkerColor} 0%, #121212 60%)`;
-
-            // Create gradient div
-            const gradientDiv = document.createElement('div');
-            gradientDiv.className = 'gradient-background';
-            gradientDiv.style.background = `linear-gradient(to bottom, ${darkerColor} 0%, #121212 60%)`;
-            document.body.appendChild(gradientDiv); // Add gradient div to body
+            // Apply gradient background with the darker color
+            document.body.style.background = `linear-gradient(to bottom, ${darkerColor} 0%, #121212 60%)`;
         })
         .catch((error) => {
             console.error("Error extracting color with Vibrant.js:", error);
@@ -44,7 +39,7 @@ const extractColor = (image) => {
 };
 
 if (img.complete) {
-    extractColor(img); 
+    extractColor(img); // If image is already loaded
 } else {
-    img.onload = () => extractColor(img); 
+    img.onload = () => extractColor(img); // If the image is still loading
 }

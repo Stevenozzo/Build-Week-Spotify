@@ -15,8 +15,14 @@ body {
 }
 
 header {
-    width: 20%;
+    width: 25%;
     background-color:black;
+    overflow-y: scroll;
+}
+
+header li:hover {
+    background-color: #272A2D;
+    border-radius: 3px;
 }
 
 main {
@@ -145,15 +151,9 @@ main {
     border-radius: 3px;
 }
 
-footer {
-    width: 15%;
-    background-color: #000000;
-}
 
-.gradient-background {
-    height: 100vh; /* Full viewport height for gradient */
-    background: linear-gradient(to bottom, #000 0%, #121212 60%); /* Initial gradient */
-    position: fixed; /* Fixed position to ensure it stays at the top */
-    width: 100%; /* Full width */
-    z-index: -1; /* Send it behind other content */
+
+footer {
+    width: 10%;
+    background-color: #000000;
 }

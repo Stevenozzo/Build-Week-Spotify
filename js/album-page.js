@@ -46,6 +46,60 @@ async function getArtistInfo(Id) {
     }
 }
 
+async function getArtistPlaylists(artistName) {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=playlist&limit=10`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json();
+
+        if (data.playlists.items.length > 0) {
+            console.log(`Found ${data.playlists.items.length} playlists for ${artistName}:`);
+
+            const headerElement = document.getElementById("playlist-header");
+            const div = document.createElement("h1");
+            div.innerHTML = `
+            <h4 class="p-1">Playlists for <br> ${artistName}</h4>
+            `
+            headerElement.appendChild(div);
+
+            // headerElement.innerHTML = ""; 
+
+            data.playlists.items.forEach(playlist => {
+
+                const liElement = document.createElement("li");
+                liElement.classList.add("flex", "space-between", "py-05"); 
+
+                const playlistImage = playlist.images.length > 0 ? playlist.images[0].url : 'default-image.jpg'; // Default image if none available
+
+                liElement.innerHTML = `
+                    <div class="flex align-center ps-1" style="color:#B3B3B3">
+                        <img src="${playlistImage}" class="square-50" alt="Playlist Image">
+                        <div class="flex column justify-center px-1">
+                            <p>${playlist.name}</p> <!-- Playlist name -->
+                            <p>${playlist.owner.display_name}</p> <!-- Owner name -->
+                        </div>
+                    </div>
+                    <p class="flex align-center text-end pe-1 justify-end width-30" style="color:#B3B3B3">${playlist.tracks.total} tracks</p>
+                `;
+
+                // Append the list item to the header
+                headerElement.appendChild(liElement);
+            });
+        } else {
+            console.log(`No playlists found for ${artistName}.`);
+        }
+
+    } catch (error) {
+        console.error("Error fetching playlists:", error);
+    }
+}
+
+
 async function getAlbumInfo(Id) {
     try {
         const response = await fetch(`https://api.spotify.com/v1/albums/${Id}`, {
@@ -142,6 +196,7 @@ async function populatePage() {
     await getAlbumInfo(albumId);
     await getArtistInfo(artistId);
     await getAlbumTracks(albumId);
+    await getArtistPlaylists(artistName);
     console.log("Album Name:", albumName);
     console.log("Artist Name:", artistName);
     console.log("Release Date:", releaseDate);
