@@ -8,15 +8,23 @@ if (!token) {
 const urlParam = new URLSearchParams(window.location.search);
 
 const artistName = urlParam.get("artistName");
-console.log(artistName);
 
-function getArtistData() {
-  fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+let artistId;
+console.log(artistName);
+let currTrack;
+
+/*function getArtistData() {
+  fetch(
+    `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+      artistName
+    )}&type=artist`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -35,6 +43,30 @@ function getArtistData() {
     .catch((error) => {
       console.log("Errore nella richiesta dell'artista:", error);
     });
+}*/
+
+function getArtistData() {
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+    artistName
+  )}&type=artist&limit=1`;
+
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.artists.items.length > 0) {
+        artistId = data.artists.items[0].id;
+        getImageUrl(data);
+        console.log("ID Artista:", artistId);
+        getArtistTracks(artistId);
+      } else {
+        console.log("Artista non trovato");
+      }
+    })
+    .catch((error) => console.error("Errore:", error));
 }
 
 const getImageUrl = (data) => {
@@ -71,4 +103,74 @@ const getImageUrl = (data) => {
 
   div.appendChild(h2);
 };
+
+/*function getArtistTracks(artistId) {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(artistId);
+      console.log("Dati dell'artista:", data);
+      console.log("Tracce dell'artista:", data.tracks);
+    })
+    .catch((error) => {
+      console.log("Errore nella richiesta dell'artista:", error);
+    });
+}*/
+
+function getArtistTracks(artistId) {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Dati dell'artista:", data);
+      console.log("Tracce dell'artista:", data.tracks);
+      data.tracks.forEach((track) => {
+        fetch(`https://api.spotify.com/v1/tracks/${track.id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((img) => {
+            console.log("tracce", img);
+
+            img.forEach((immagine) => {
+              mostraTracce(data.tracks, immagine);
+            });
+          });
+      });
+    })
+    .catch((error) => {
+      console.log("Errore nella richiesta dell'artista:", error);
+    });
+}
+function mostraTracce(tracks, img) {
+  const container = document.getElementById("topTrackList");
+  container.innerHTML = "";
+
+  tracks.forEach((track, index) => {
+    const trackElement = document.createElement("div");
+    trackElement.setAttribute("id", "trackList");
+    trackElement.innerHTML = `<div class="d-flex align-center">
+        <p class="px-2 d-flex align-center">${index + 1}</p>
+        <img src="${img.album.images[0].url}" alt="">
+        <div class="d-flex flex-column">
+            <p class="">${track.name}</p> 
+            <p class="">${artistName}</p> 
+        </div>
+      </div>`;
+    container.appendChild(trackElement);
+  });
+}
+
 getArtistData();
