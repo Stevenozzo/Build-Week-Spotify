@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/style/custom-style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="icon" href="assets/imgs/main/icons8-spotify.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="./assets/css/artist.css" />
 
     <style>
       :root {
@@ -51,6 +52,9 @@
         100% {
           transform: rotate(360deg);
         }
+      }
+      #trackList {
+        font-size: 24px;
       }
     </style>
   </head>
@@ -95,7 +99,7 @@
 
             <hr class="my-0" />
             <ul class="list-unstyled" id="plist"></ul>
-            <div class="" id="topTrackList"></div>
+            <div class="d-flex flex-column gap-3 mt-5" id="topTrackList"></div>
           </div>
           <div class="px-1 col-2 bg-black d-none d-lg-flex flex-column align-content-start position-sticky top-0 right-0 overflow-hidden" style="height: 100vh">
             <div class="d-flex justify-content-between m-2 align-items-center">
@@ -108,7 +112,8 @@
               </div>
               <div class="col-10">
                 <p class="d-flex justify-content-between my-0 fs-small">
-                  <span class="fw-bold">Melanie Santamaria </span> <span class="fs-supersmall">4 ore</span>
+                  <span class="fw-bold">Melanie Santamaria </span>
+                  <span class="fs-supersmall">4 ore</span>
                 </p>
                 <p class="my-0 fs-small truncateText"><span>In Camera </span><i class="bi bi-dot"></i><span>Yumi Zouma</span></p>
                 <p class="fs-small truncateText"><i class="bi bi-disc"></i>EP |||</p>
@@ -120,7 +125,8 @@
               </div>
               <div class="col-10">
                 <p class="d-flex justify-content-between my-0 fs-small">
-                  <span class="fw-bold">Andrea Ceccarelli</span> <span class="fs-supersmall">8 ore</span>
+                  <span class="fw-bold">Andrea Ceccarelli</span>
+                  <span class="fs-supersmall">8 ore</span>
                 </p>
                 <p class="d-flex my-0 fs-small truncateText"><span>Aimend to Kill</span><i class="bi bi-dot"></i><span>Jade LeMac</span></p>
                 <p class="fs-11 truncateText"><i class="bi bi-disc"></i>Aimend to Kill</p>
@@ -132,7 +138,8 @@
               </div>
               <div class="col-10">
                 <p class="d-flex justify-content-between my-0 fs-small">
-                  <span class="fw-bold">Steven Carlino</span> <span class="fs-supersmall">3 giorni</span>
+                  <span class="fw-bold">Steven Carlino</span>
+                  <span class="fs-supersmall">3 giorni</span>
                 </p>
                 <p class="d-flex my-0 fs-small truncateText"><span>New Kings</span><i class="bi bi-dot"></i><span class="fs-11">Sleeping Wolf</span></p>
                 <p class="fs-11 truncateText"><i class="bi bi-music-note-beamed"></i>Twint Badass Mood</p>
