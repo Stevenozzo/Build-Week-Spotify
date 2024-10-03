@@ -2,8 +2,7 @@ import { readCookie } from "./cookies.js";
 
 const token = readCookie("SpotifyBearer");
 
-// Valorizzazione dell'User ID e degli scope
-const userId = "qpkkldz3mipajti4lw070gfhl"; // Inserisci qui il tuo User ID
+const userId = "qpkkldz3mipajti4lw070gfhl";
 const scopes = encodeURIComponent(
   "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
 );
@@ -12,9 +11,8 @@ const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&resp
   "http://127.0.0.1:5501/auth.html"
 )}&scope=${scopes}`;
 
-// Controlla se l'utente è autenticato
 if (!token) {
-  location.href = "/index.html"; // Reindirizza se non autenticato
+  location.href = "/index.html";
 }
 
 function searchArtistByName(artistName) {
@@ -105,22 +103,19 @@ function createPlaylist() {
     });
 }
 
-// Assicurati che il codice venga eseguito dopo che il DOM è completamente carico
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("search-btn").addEventListener("click", () => {
-    const artistInput = document.getElementById("artist-input").value;
+  document.getElementById("saveList").addEventListener("click", () => {
+    const artistInput = document.getElementById("textInput").value;
     if (artistInput) {
       searchArtistByName(artistInput);
-      createPlaylist(); // Crea la playlist quando l'utente inserisce un artista
+      createPlaylist();
     } else {
       console.log("Inserisci un nome artista.");
     }
   });
 
-  // Esegui la ricerca per l'artista all'avvio, se necessario
   if (token) {
-    // Non avviamo la creazione della playlist automaticamente, solo su input
   } else {
-    window.location.href = authUrl; // Reindirizza per l'autenticazione se il token non è presente
+    window.location.href = authUrl;
   }
 });
