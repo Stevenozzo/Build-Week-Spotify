@@ -1,23 +1,16 @@
-import { readCookie } from "./cookies.js";
-
-const token = readCookie("SpotifyBearer");
+const token = localStorage.getItem("access_token");
 if (!token) {
   location.href = "/index.html";
 }
 
-
 function getParamFromUrl(paramName) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(paramName);
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(paramName);
 }
 
 const albumId = getParamFromUrl("albumId");
-const artistId = getParamFromUrl("artistId")
-console.log('Album ID:', albumId);
-
-
-
-
+const artistId = getParamFromUrl("artistId");
+console.log("Album ID:", albumId);
 
 let albumName;
 let artistName;
@@ -27,86 +20,82 @@ let albumImage;
 let totalDuration = 0;
 let albumTracks = [];
 
-
 async function getArtistInfo(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/artists/${Id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${Id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        const artist = await response.json();
+    const artist = await response.json();
 
-        console.log(artist);
-        artistImage = artist.images[2].url;      
-    } catch (error) {
-        console.log("Errore nella richiesta dell'artista:", error);
-    }
+    console.log(artist);
+    artistImage = artist.images[2].url;
+  } catch (error) {
+    console.log("Errore nella richiesta dell'artista:", error);
+  }
 }
 
 async function getAlbumInfo(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/albums/${Id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/albums/${Id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        const album = await response.json();
+    const album = await response.json();
 
-
-        console.log(album);
-        // Now the values are available
-        albumName = album.name;
-        artistName = album.artists[0].name;
-        releaseDate = album.release_date;
-        albumImage = album.images[0].url;
-        
-    } catch (error) {
-        console.log("Errore nella richiesta dei brani:", error);
-    }
+    console.log(album);
+    // Now the values are available
+    albumName = album.name;
+    artistName = album.artists[0].name;
+    releaseDate = album.release_date;
+    albumImage = album.images[0].url;
+  } catch (error) {
+    console.log("Errore nella richiesta dei brani:", error);
+  }
 }
 
 async function getAlbumTracks(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/albums/${Id}/tracks`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        const brani = await response.json();
-        
-        albumTracks = brani.items.map((brano) => ({
-            name: brano.name,
-            duration: brano.duration_ms,
-            id: brano.id
-        }));
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/albums/${Id}/tracks`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const brani = await response.json();
 
-        console.log(albumTracks); // This will be available when the fetch is complete
-    } catch (error) {
-        console.log("Errore nella richiesta dei brani:", error);
-    }
+    albumTracks = brani.items.map((brano) => ({
+      name: brano.name,
+      duration: brano.duration_ms,
+      id: brano.id,
+    }));
+
+    console.log(albumTracks); // This will be available when the fetch is complete
+  } catch (error) {
+    console.log("Errore nella richiesta dei brani:", error);
+  }
 }
 
 function renderAlbumTracks() {
-    const ulElement = document.getElementById("tracks-list");
-    ulElement.innerHTML = "";
+  const ulElement = document.getElementById("tracks-list");
+  ulElement.innerHTML = "";
 
-    albumTracks.forEach((track, index) => {
+  albumTracks.forEach((track, index) => {
+    const liElement = document.createElement("li");
+    liElement.classList.add("flex", "space-between");
 
-        const liElement = document.createElement("li");
-        liElement.classList.add("flex", "space-between");
+    totalDuration += track.duration;
 
-        totalDuration += track.duration;
+    const minutes = Math.floor(track.duration / 60000);
+    const seconds = ((track.duration % 60000) / 1000).toFixed(0);
 
-        const minutes = Math.floor(track.duration / 60000);
-        const seconds = ((track.duration % 60000) / 1000).toFixed(0);
-
-        liElement.innerHTML = `
+    liElement.innerHTML = `
             <div class="flex width-40">
                 <p class="track-number">${index + 1}</p>
                 <div>
@@ -118,16 +107,14 @@ function renderAlbumTracks() {
             <p class="width-30 text-end">${minutes}h ${seconds}s</p> <!-- Custom time formatting -->
         `;
 
-        ulElement.appendChild(liElement);
-    });
+    ulElement.appendChild(liElement);
+  });
 
-    const totalMinutes = Math.floor(totalDuration / 60000);
-    const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
-    const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
-    totalDuration = formattedTotalDuration;
+  const totalMinutes = Math.floor(totalDuration / 60000);
+  const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
+  const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
+  totalDuration = formattedTotalDuration;
 }
-
-
 
 let resultImage = document.getElementById("album-image");
 let resultArtistName = document.getElementById("artist-name");
@@ -136,39 +123,37 @@ let reusltTracksNr = document.getElementById("trackNr");
 let resultArtistImg = document.getElementById("artist-image");
 let resultTitle = document.getElementById("album-title");
 let reusltTotDur = document.getElementById("tot-duration");
-let pageContent = document.querySelector('main');
+let pageContent = document.querySelector("main");
 
 async function populatePage() {
-    await getAlbumInfo(albumId);
-    await getArtistInfo(artistId);
-    await getAlbumTracks(albumId);
-    console.log("Album Name:", albumName);
-    console.log("Artist Name:", artistName);
-    console.log("Release Date:", releaseDate);
-    console.log("Album Image URL", albumImage);
-    resultImage.src = albumImage;
-    import('./bg-gradient.js')
-        .then(() => {
-        console.log('bg-gradient.js has been loaded');
-        })
-        .catch((error) => {
-        console.error('Error loading bg-gradient.js:', error);
+  await getAlbumInfo(albumId);
+  await getArtistInfo(artistId);
+  await getAlbumTracks(albumId);
+  console.log("Album Name:", albumName);
+  console.log("Artist Name:", artistName);
+  console.log("Release Date:", releaseDate);
+  console.log("Album Image URL", albumImage);
+  resultImage.src = albumImage;
+  import("./bg-gradient.js")
+    .then(() => {
+      console.log("bg-gradient.js has been loaded");
+    })
+    .catch((error) => {
+      console.error("Error loading bg-gradient.js:", error);
     });
 
-    resultArtistImg.src = artistImage;
-    resultArtistName.innerText = artistName; 
-    resutRelease.innerText = releaseDate;
-    reusltTracksNr.innerText = `${albumTracks.length} brani`;
-    resultTitle.innerText = albumName;
-    
-    renderAlbumTracks();
-    reusltTotDur.innerText = totalDuration;
+  resultArtistImg.src = artistImage;
+  resultArtistName.innerText = artistName;
+  resutRelease.innerText = releaseDate;
+  reusltTracksNr.innerText = `${albumTracks.length} brani`;
+  resultTitle.innerText = albumName;
 
-    setTimeout(() => {
-        pageContent.classList.remove("hidden");
-    }, 100);
+  renderAlbumTracks();
+  reusltTotDur.innerText = totalDuration;
 
-
+  setTimeout(() => {
+    pageContent.classList.remove("hidden");
+  }, 100);
 }
 
 populatePage();
