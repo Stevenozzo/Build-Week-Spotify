@@ -125,3 +125,28 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = authUrlBase;
   }
 });
+
+function transferPlayback(deviceId, token) {
+  fetch("https://api.spotify.com/v1/me/player", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      device_ids: [deviceId],
+      play: false, // true per iniziare subito la riproduzione
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Riproduzione trasferita con successo!");
+      } else {
+        console.log([deviceId]);
+        throw new Error("Errore nel trasferimento della riproduzione");
+      }
+    })
+    .catch((error) => {
+      console.error("Errore nella richiesta:", error);
+    });
+}
