@@ -1,9 +1,20 @@
 import { readCookie } from "./cookies.js";
-const artistName = "Antonello Venditti";
 
 const token = readCookie("SpotifyBearer");
+
+// Valorizzazione dell'User ID e degli scope
+const userId = "qpkkldz3mipajti4lw070gfhl"; // Inserisci qui il tuo User ID
+const scopes = encodeURIComponent(
+  "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
+);
+
+const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&response_type=token&redirect_uri=${encodeURIComponent(
+  "http://127.0.0.1:5501/auth.html"
+)}&scope=${scopes}`;
+
+// Controlla se l'utente è autenticato
 if (!token) {
-  location.href = "/index.html";
+  location.href = "/index.html"; // Reindirizza se non autenticato
 }
 
 function searchArtistByName(artistName) {
@@ -32,7 +43,7 @@ function searchArtistByName(artistName) {
 }
 
 function getArtistData(artistId) {
-  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+  fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=IT`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -50,15 +61,6 @@ function getArtistData(artistId) {
     });
 }
 
-const searchBar = document.getElementById("search-bar");
-const searchButton = document.getElementById("search-button");
-
-// searchButton.addEventListener("click", function () {
-//   const artistName = searchBar.value;
-//   searchArtistByName(artistName);
-// });
-
-// Funzione per ottenere gli album dell'artista
 function getAlbums(artistId) {
   fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
     method: "GET",
@@ -75,133 +77,6 @@ function getAlbums(artistId) {
     });
 }
 
-// let player;
-
-// window.onload = () => {
-//   window.onSpotifyWebPlaybackSDKReady = () => {
-//     player = new Spotify.Player({
-//       name: "Web Playback SDK Quick Start Player",
-//       getOAuthToken: (cb) => {
-//         cb(token);
-//       },
-//       volume: 0.5,
-//     });
-//     console.log(player);
-//   };
-// };
-
-// Funzione per ottenere la traccia attuale
-function getCurrentlyPlayingTrack() {
-  const url = `https://api.spotify.com/v1/me/player/currently-playing?market=IT`;
-
-  fetch(url, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data && data.item) {
-        const track = data.item;
-        document.getElementById("song-title").textContent = track.name;
-        document.getElementById("song-artist").textContent = track.artists.map((artist) => artist.name).join(", ");
-        document.getElementById("album-cover").src = track.album.images[0].url;
-      }
-    })
-    .catch((error) => console.log("Errore nel caricamento della traccia:", error));
-}
-
-// Controlli per play/pausa/skip
-// document.getElementById("play-btn").addEventListener("click", () => {
-//   fetch(`https://api.spotify.com/v1/me/player/play`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then(() => {
-//       document.getElementById("play-btn").style.display = "none";
-//       document.getElementById("pause-btn").style.display = "inline";
-//     })
-//     .catch((error) => console.log("Errore nel riprodurre la traccia:", error));
-// });
-
-// document.getElementById("pause-btn").addEventListener("click", () => {
-//   fetch(`https://api.spotify.com/v1/me/player/pause`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then(() => {
-//       document.getElementById("play-btn").style.display = "inline";
-//       document.getElementById("pause-btn").style.display = "none";
-//     })
-//     .catch((error) => console.log("Errore nel mettere in pausa la traccia:", error));
-// });
-
-// Aggiungi controlli per "avanti" e "indietro" in modo simile
-
-// player.addListener("ready", ({ player }) => {
-//   setInterval(pippo(player), 3000);
-// });
-// player.addListener("not_ready", ({ device_id }) => {
-//   console.log("Player non pronto con Device ID", device_id);
-// });
-
-// player.addListener("initialization_error", ({ message }) => {
-//   console.error(message);
-// });
-
-// player.addListener("authentication_error", ({ message }) => {
-//   console.error(message);
-// });
-
-// player.addListener("account_error", ({ message }) => {
-//   console.error(message);
-// });
-
-// player.addListener("playback_error", ({ message }) => {
-//   console.error(message);
-// });
-
-// player.connect();
-
-// function playTrack(uri) {
-//   fetch(`https://api.spotify.com/v1/me/player/play`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ uris: [uri] }),
-//   })
-//     .then((response) => {
-//       if (response.ok) {
-//         console.log("Brano in riproduzione:", uri);
-//       } else {
-//         console.error("Errore nella riproduzione del brano");
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Errore nel tentativo di riprodurre il brano:", error);
-//     });
-// }
-
-// searchArtistByName(artistName);
-
-const userId = "qpkkldz3mipajti4lw070gfhl";
-const scopes = encodeURIComponent(
-  "user-read-private user-read-email user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private"
-);
-
-const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&response_type=token&redirect_uri=${encodeURIComponent(
-  "http://127.0.0.1:5501/auth.html"
-)}&scope=${scopes}`;
-
-// creo playlist
 function createPlaylist() {
   fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
     method: "POST",
@@ -211,7 +86,7 @@ function createPlaylist() {
     },
     body: JSON.stringify({
       name: "New Playlist",
-      description: "playlist creata tramite l'API di Spotify",
+      description: "Playlist creata tramite l'API di Spotify",
       public: false,
     }),
   })
@@ -230,10 +105,22 @@ function createPlaylist() {
     });
 }
 
-window.onload = () => {
+// Assicurati che il codice venga eseguito dopo che il DOM è completamente carico
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("search-btn").addEventListener("click", () => {
+    const artistInput = document.getElementById("artist-input").value;
+    if (artistInput) {
+      searchArtistByName(artistInput);
+      createPlaylist(); // Crea la playlist quando l'utente inserisce un artista
+    } else {
+      console.log("Inserisci un nome artista.");
+    }
+  });
+
+  // Esegui la ricerca per l'artista all'avvio, se necessario
   if (token) {
-    createPlaylist();
+    // Non avviamo la creazione della playlist automaticamente, solo su input
   } else {
-    window.location.href = authUrl;
+    window.location.href = authUrl; // Reindirizza per l'autenticazione se il token non è presente
   }
-};
+});
