@@ -1,0 +1,8 @@
+<div class="">
+  <p class="">${index + 1}</p>
+  <img src="" alt="" />
+  <div class="">
+    <p class="">${track.name}</p>
+    <p class="">${track.explicit ? `<span class="explicit">E</span>` : ``}${artistName}</p>
+  </div>
+</div>

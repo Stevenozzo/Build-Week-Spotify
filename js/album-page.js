@@ -79,11 +79,12 @@ async function getAlbumTracks(Id) {
             },
         });
         const brani = await response.json();
-        
+        console.log(brani);
         albumTracks = brani.items.map((brano) => ({
             name: brano.name,
             duration: brano.duration_ms,
-            id: brano.id
+            id: brano.id,
+            explicit: brano.explicit
         }));
 
         console.log(albumTracks); // This will be available when the fetch is complete
@@ -99,7 +100,7 @@ function renderAlbumTracks() {
     albumTracks.forEach((track, index) => {
 
         const liElement = document.createElement("li");
-        liElement.classList.add("flex", "space-between");
+        liElement.classList.add("flex", "space-between", "p-1");
 
         totalDuration += track.duration;
 
@@ -107,15 +108,14 @@ function renderAlbumTracks() {
         const seconds = ((track.duration % 60000) / 1000).toFixed(0);
 
         liElement.innerHTML = `
-            <div class="flex width-40">
-                <p class="track-number">${index + 1}</p>
-                <div>
-                    <p class="track-name">${track.name}</p> 
-                    <p class="track-artist">${artistName}</p> 
+            <div class="flex width-30 align-center">
+                <p class="flex p-1 align-center square-40 justify-end">${index + 1}</p>
+                <div class="flex column justify-center">
+                    <p class="f-white">${track.name}</p> 
+                    <p class="flex align-center">${track.explicit ? `<span class="explicit">E</span>` : ``}${artistName}</p> 
                 </div>
             </div>
-            <p class="width-30 text-end">riproduzioni totali</p> <!-- Track duration -->
-            <p class="width-30 text-end">${minutes}h ${seconds}s</p> <!-- Custom time formatting -->
+            <p class="width-30 flex align-center justify-end pe-1">${minutes}h ${seconds}s</p> <!-- Custom time formatting -->
         `;
 
         ulElement.appendChild(liElement);
