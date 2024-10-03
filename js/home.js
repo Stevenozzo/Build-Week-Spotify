@@ -1,5 +1,6 @@
 import { clientId, clientSecret, redirectUri, scope, apiUrlToken, authUrlBase } from "./modules/constants.js";
 const token = localStorage.getItem("access_token");
+let userId;
 function getUserId(token) {
   fetch("https://api.spotify.com/v1/me", {
     method: "GET",
@@ -9,7 +10,7 @@ function getUserId(token) {
   })
     .then((response) => response.json())
     .then((data) => {
-      const userId = data.id;
+      userId = data.id;
       console.log("User ID:", userId);
     })
     .catch((error) => console.error("Errore nel recupero dell'User ID:", error));

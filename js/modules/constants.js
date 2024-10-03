@@ -1,5 +1,5 @@
-export const clientId = "ab217707d15e45c09a7b3be2a13b1857";
-export const clientSecret = "b4ed9d6f447f4db785bd6bfd559d05b1";
+export const clientId = "5822df7e876743069edcf2cd2a9529ea";
+export const clientSecret = "f7025997d0c1426eaaefd8e07bd3b813";
 export const redirectUri = "http://127.0.0.1:5501/auth.html";
 export const scope = [
   "user-read-private",
