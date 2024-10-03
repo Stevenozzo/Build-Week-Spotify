@@ -5,170 +5,144 @@ if (!token) {
   location.href = "/index.html";
 }
 
-
 function getParamFromUrl(paramName) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(paramName);
+  return new URLSearchParams(window.location.search).get(paramName);
 }
 
 const albumId = getParamFromUrl("albumId");
-const artistId = getParamFromUrl("artistId")
-console.log('Album ID:', albumId);
+const artistId = getParamFromUrl("artistId");
 
-
-
-
-
-let albumName;
-let artistName;
-let artistImage;
-let releaseDate;
-let albumImage;
-let totalDuration = 0;
-let albumTracks = [];
-
-
-async function getArtistInfo(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/artists/${Id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        const artist = await response.json();
-
-        console.log(artist);
-        artistImage = artist.images[2].url;      
-    } catch (error) {
-        console.log("Errore nella richiesta dell'artista:", error);
-    }
+function formatDuration(ms) {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = ((ms % 60000) / 1000).toFixed(0);
+  return `${minutes}h ${seconds < 10 ? "0" : ""}${seconds}s`;
 }
 
-async function getAlbumInfo(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/albums/${Id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        const album = await response.json();
-
-
-        console.log(album);
-        // Now the values are available
-        albumName = album.name;
-        artistName = album.artists[0].name;
-        releaseDate = album.release_date;
-        albumImage = album.images[0].url;
-        
-    } catch (error) {
-        console.log("Errore nella richiesta dei brani:", error);
-    }
-}
-
-async function getAlbumTracks(Id) {
-    try {
-        const response = await fetch(`https://api.spotify.com/v1/albums/${Id}/tracks`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        const brani = await response.json();
-        
-        albumTracks = brani.items.map((brano) => ({
-            name: brano.name,
-            duration: brano.duration_ms,
-            id: brano.id
-        }));
-
-        console.log(albumTracks); // This will be available when the fetch is complete
-    } catch (error) {
-        console.log("Errore nella richiesta dei brani:", error);
-    }
-}
-
-function renderAlbumTracks() {
-    const ulElement = document.getElementById("tracks-list");
-    ulElement.innerHTML = "";
-
-    albumTracks.forEach((track, index) => {
-
-        const liElement = document.createElement("li");
-        liElement.classList.add("flex", "space-between");
-
-        totalDuration += track.duration;
-
-        const minutes = Math.floor(track.duration / 60000);
-        const seconds = ((track.duration % 60000) / 1000).toFixed(0);
-
-        liElement.innerHTML = `
-            <div class="flex width-40">
-                <p class="track-number">${index + 1}</p>
-                <div>
-                    <p class="track-name">${track.name}</p> 
-                    <p class="track-artist">${artistName}</p> 
-                </div>
-            </div>
-            <p class="width-30 text-end">riproduzioni totali</p> <!-- Track duration -->
-            <p class="width-30 text-end">${minutes}h ${seconds}s</p> <!-- Custom time formatting -->
-        `;
-
-        ulElement.appendChild(liElement);
+async function fetchArtistInfo(id) {
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
-
-    const totalMinutes = Math.floor(totalDuration / 60000);
-    const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
-    const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
-    totalDuration = formattedTotalDuration;
+    const artist = await response.json();
+    return { name: artist.name, image: artist.images[2].url };
+  } catch (error) {
+    console.error("Error fetching artist info:", error);
+    return {};
+  }
 }
 
+async function fetchAlbumInfo(id) {
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const album = await response.json();
+    return {
+      name: album.name,
+      artistName: album.artists[0].name,
+      releaseDate: album.release_date,
+      image: album.images[0].url,
+      tracks: album.tracks.items.map(track => ({
+        name: track.name,
+        duration: track.duration_ms,
+        explicit: track.explicit
+      }))
+    };
+  } catch (error) {
+    console.error("Error fetching album info:", error);
+    return {};
+  }
+}
 
+async function fetchArtistPlaylists(artistName) {
+  try {
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=playlist&limit=10`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const data = await response.json();
+    return data.playlists.items;
+  } catch (error) {
+    console.error("Error fetching playlists:", error);
+    return [];
+  }
+}
 
-let resultImage = document.getElementById("album-image");
-let resultArtistName = document.getElementById("artist-name");
-let resutRelease = document.getElementById("release");
-let reusltTracksNr = document.getElementById("trackNr");
-let resultArtistImg = document.getElementById("artist-image");
-let resultTitle = document.getElementById("album-title");
-let reusltTotDur = document.getElementById("tot-duration");
-let pageContent = document.querySelector('main');
+function renderAlbumTracks(tracks, artistName) {
+  const ulElement = document.getElementById("tracks-list");
+  let totalDuration = 0;
+  let trackHtml = tracks.map((track, index) => {
+    totalDuration += track.duration;
+    return `
+      <li class="flex space-between p-1">
+        <div class="flex width-30 align-center">
+          <p class="flex p-1 align-center square-40 justify-end">${index + 1}</p>
+          <div class="flex column justify-center">
+            <p class="f-white">${track.name}</p> 
+            <p class="flex align-center">${track.explicit ? `<span class="explicit me-05">E</span>` : ''}${artistName}</p>
+          </div>
+        </div>
+        <p class="width-30 flex align-center justify-end pe-1">${formatDuration(track.duration)}</p>
+      </li>
+    `;
+  }).join("");
+
+  ulElement.innerHTML = trackHtml;
+
+  // Update total duration in the DOM
+  const totalMinutes = Math.floor(totalDuration / 60000);
+  const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
+  const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
+  document.getElementById("tot-duration").innerText = formattedTotalDuration;
+}
+
+function renderArtistPlaylists(playlists, artistName) {
+  const headerElement = document.getElementById("playlist-header");
+  headerElement.innerHTML = `<h4 class="p-1">Playlists for <br> ${artistName}</h4>`;
+  let playlistHtml = playlists.map(playlist => {
+    const playlistImage = playlist.images.length > 0 ? playlist.images[0].url : 'default-image.jpg';
+    return `
+      <li class="flex space-between py-05">
+        <div class="flex align-center ps-1" style="color:#B3B3B3">
+          <img src="${playlistImage}" class="square-50" alt="Playlist Image">
+          <div class="flex column justify-center px-1">
+            <p>${playlist.name}</p>
+            <p>${playlist.owner.display_name}</p>
+          </div>
+        </div>
+        <p class="flex align-center text-end pe-1 justify-end width-30" style="color:#B3B3B3">${playlist.tracks.total} tracks</p>
+      </li>
+    `;
+  }).join("");
+
+  headerElement.innerHTML += playlistHtml;
+}
 
 async function populatePage() {
-    await getAlbumInfo(albumId);
-    await getArtistInfo(artistId);
-    await getAlbumTracks(albumId);
-    console.log("Album Name:", albumName);
-    console.log("Artist Name:", artistName);
-    console.log("Release Date:", releaseDate);
-    console.log("Album Image URL", albumImage);
-    resultImage.src = albumImage;
-    import('./bg-gradient.js')
-        .then(() => {
-        console.log('bg-gradient.js has been loaded');
-        })
-        .catch((error) => {
-        console.error('Error loading bg-gradient.js:', error);
-    });
+  const [albumInfo, artistInfo] = await Promise.all([
+    fetchAlbumInfo(albumId),
+    fetchArtistInfo(artistId)
+  ]);
 
-    resultArtistImg.src = artistImage;
-    resultArtistName.innerText = artistName; 
-    resutRelease.innerText = releaseDate;
-    reusltTracksNr.innerText = `${albumTracks.length} brani`;
-    resultTitle.innerText = albumName;
-    
-    renderAlbumTracks();
-    reusltTotDur.innerText = totalDuration;
+  document.getElementById("album-image").src = albumInfo.image;
+  document.getElementById("artist-name").innerText = artistInfo.name;
+  document.getElementById("release").innerText = albumInfo.releaseDate;
+  document.getElementById("trackNr").innerText = `${albumInfo.tracks.length} brani`;
+  document.getElementById("album-title").innerText = albumInfo.name;
+  document.getElementById("artist-image").src = artistInfo.image;
 
-    setTimeout(() => {
-        pageContent.classList.remove("hidden");
-    }, 100);
+  renderAlbumTracks(albumInfo.tracks, albumInfo.artistName);
 
+  const artistPlaylists = await fetchArtistPlaylists(albumInfo.artistName);
+  if (artistPlaylists.length > 0) {
+    renderArtistPlaylists(artistPlaylists, artistInfo.name);
+  }
 
+  import('./bg-gradient.js')
+    .then(() => console.log('bg-gradient.js has been loaded'))
+    .catch((error) => console.error('Error loading bg-gradient.js:', error));
+
+  document.querySelector('main').classList.remove("hidden");
 }
 
 populatePage();
