@@ -1,6 +1,4 @@
-import { readCookie } from "./cookies.js";
-
-const token = readCookie("SpotifyBearer");
+const token = localStorage.getItem("access_token");
 
 const userId = "qpkkldz3mipajti4lw070gfhl";
 const scopes = encodeURIComponent(
@@ -12,7 +10,7 @@ const authUrl = `https://accounts.spotify.com/authorize?client_id=${userId}&resp
 )}&scope=${scopes}`;
 
 if (!token) {
-  location.href = "/index.html";
+  location.href = "/login.html";
 }
 
 function searchArtistByName(artistName) {
