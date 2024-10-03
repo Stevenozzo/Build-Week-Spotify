@@ -58,8 +58,6 @@ async function getArtistPlaylists(artistName) {
         const data = await response.json();
 
         if (data.playlists.items.length > 0) {
-            console.log(`Found ${data.playlists.items.length} playlists for ${artistName}:`);
-
             const headerElement = document.getElementById("playlist-header");
             const div = document.createElement("h1");
             div.innerHTML = `
@@ -87,7 +85,6 @@ async function getArtistPlaylists(artistName) {
                     <p class="flex align-center text-end pe-1 justify-end width-30" style="color:#B3B3B3">${playlist.tracks.total} tracks</p>
                 `;
 
-                // Append the list item to the header
                 headerElement.appendChild(liElement);
             });
         } else {
