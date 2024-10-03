@@ -105,6 +105,9 @@
 }
 
 /* Margins */
+.me-05 {
+    margin-right: 0.5rem;
+}
 .my-1 {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -198,6 +201,9 @@
 }
 
 /* Paddings */
+.px-05 {
+    padding-inline: 0.5rem;
+}
 .py-05 {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
