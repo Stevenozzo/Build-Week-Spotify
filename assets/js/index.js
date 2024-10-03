@@ -1,6 +1,6 @@
-import { player, playerCarousel, playerTracks, initTracks } from "./player.js";
+// import { player, playerCarousel, playerTracks, initTracks } from "./player.js";
 //import variabili
-import { trackDataArray } from "./player.js";
+// import { trackDataArray } from "./player.js";
 
 const albumsId = ["11205422", "534017402", "544892012", "420845567", "6327742", "112217392", "6157080", "74872972"];
 const carouselRow = document.getElementById("carousel");
@@ -23,8 +23,8 @@ if (!playlists) {
 }
 
 window.onload = function () {
-  initTracks();
-  player();
+  // initTracks();
+  // player();
   buildCarouselItems();
   buonaseraBuilder();
 };
@@ -127,8 +127,8 @@ function buildCarousel(datasetArray) {
                         <p class="fs-small"><a href="albumdetails.html" class="text-light text-decoration-none">${element.album.title}</a></p>
                         <p class="fs-small mb-0">${convertDuration(element.duration)}</p>
                         <div class="w-100 d-flex align-items-center">
-                            <button onclick='playerCarousel(${escapedElement})' class="btn btn-sm bg-primary rounded-5 px-4 py-2 me-3 h-25 fw-bold text-black">Play</button>
-                            <button onclick="salvaModal(${escapedElement})" class="btn btn-sm bg-black text-white rounded-5 px-4 py-2 me-3 h-25 border border-white border-1 saver"  data-bs-toggle="modal" data-bs-target="#aggiuntaBrano">Salva</button>
+                            <button class="btn btn-sm bg-primary rounded-5 px-4 py-2 me-3 h-25 fw-bold text-black">Play</button>
+                            <button class="btn btn-sm bg-black text-white rounded-5 px-4 py-2 me-3 h-25 border border-white border-1 saver"  data-bs-toggle="modal" data-bs-target="#aggiuntaBrano">Salva</button>
                             <p class="fs-1">...</p>
                         </div>
                     </div>
@@ -145,15 +145,15 @@ function buildCarousel(datasetArray) {
 // Funzione per creare le card____________________________________________
 function createAlbumCards(track) {
   // Aggiungi il track al trackDataArray e ottieni l'indice
-  const trackIndex = trackDataArray.length;
-  trackDataArray.push(track);
+  // const trackIndex = trackDataArray.length;
+  // trackDataArray.push(track);
 
   cardsAlbumRow.innerHTML += `
         <div class="col-12 col-md-3 mb-3 rounded scaleHover"
           <div class="card w-25 " >
           <div class="position-relative">
             <img src="${track[0].album.cover_medium}" class="card-img-top rounded mt-2" alt="img album" >  
-            <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5  d-none rounded-circle "><i class="bi bi-play-fill fs-4" onclick="playerTracks(${trackIndex})"></i></button>
+            <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5  d-none rounded-circle "><i class="bi bi-play-fill fs-4"></i></button>
             </div>        
             
             <div class="card-body d-none">
@@ -240,8 +240,8 @@ function addTrackPlaylist(listItem, track) {
   });
 }
 
-window.playerCarousel = playerCarousel;
-window.playerTracks = playerTracks;
-window.initTracks = initTracks;
-window.salvaModal = salvaModal;
-window.addTrackPlaylist = addTrackPlaylist;
+// window.playerCarousel = playerCarousel;
+// window.playerTracks = playerTracks;
+// window.initTracks = initTracks;
+// window.salvaModal = salvaModal;
+// window.addTrackPlaylist = addTrackPlaylist;
