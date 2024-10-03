@@ -121,6 +121,7 @@ const getImageUrl = (data) => {
       console.log("Errore nella richiesta dell'artista:", error);
     });
 }*/
+let imgUrl = [];
 
 function getArtistTracks(artistId) {
   fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
@@ -142,15 +143,14 @@ function getArtistTracks(artistId) {
         })
           .then((response) => response.json())
           .then((img) => {
-            console.log("tracce", img);
+            imgUrl.push(img.album.images[0].url);
 
-            img.forEach((immagine) => {
-              mostraTracce(data.tracks, immagine);
-            });
           });
-      });
-    })
-    .catch((error) => {
+        });
+
+        mostraTracce(data.tracks)
+      })
+      .catch((error) => {
       console.log("Errore nella richiesta dell'artista:", error);
     });
 }
@@ -163,7 +163,7 @@ function mostraTracce(tracks, img) {
     trackElement.setAttribute("id", "trackList");
     trackElement.innerHTML = `<div class="d-flex align-center">
         <p class="px-2 d-flex align-center">${index + 1}</p>
-        <img src="${img.album.images[0].url}" alt="">
+        <img src="${img}" alt="">
         <div class="d-flex flex-column">
             <p class="">${track.name}</p> 
             <p class="">${artistName}</p> 
@@ -174,3 +174,6 @@ function mostraTracce(tracks, img) {
 }
 
 getArtistData();
+function addImg() => {
+  
+};
