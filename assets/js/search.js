@@ -1,9 +1,9 @@
 // import { player, initTracks, searchTrack } from "./player.js";
 
 import { readCookie } from "../../js/cookies.js";
-const token = readCookie("SpotifyBearer");
+const token = localStorage.getItem("access_token");
 if (!token) {
-  location.href = "/index.html";
+  location.href = "/home.html";
 }
 
 const loading = document.getElementById("loading");
@@ -202,7 +202,7 @@ function builArtistItems(dati) {
                     <div class="col-1 opacity-50">${i + 1}</div>
                     <div class="col-1"><img src="${item.images[0].url}" alt="artista" class="w-100 rounded-3"></div>
                     <div class="col-7 d-flex flex-column justify-content-center">
-                         <p class="mb-0 "><a href="./artist.html?artistId=${item.id}" class="text-light text-decoration-none">${item.name}</a></p>
+                         <p class="mb-0 "><a href="./artist.html?artistName=${item.name}" class="text-light text-decoration-none">${item.name}</a></p>
                     </div>
                 </div>
         `;

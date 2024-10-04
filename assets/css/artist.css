@@ -1,0 +1,5 @@
+#topTrackList > div:hover {
+    background-color: rgb(83, 83, 83);
+    transition: 0.1s ease;
+    border-radius: 4px;
+}

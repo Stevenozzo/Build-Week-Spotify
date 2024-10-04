@@ -65,7 +65,7 @@
           <div class="col-3 bg-black d-none d-lg-flex px-3 pt-2 flex-column position-sticky top-0 left-0 overflow-hidden" style="height: 100vh">
             <p class="fs-4 fw-semibold mb-2">...</p>
             <p class="d-flex align-items-center mb-2">
-              <img src="assets/icons/house-door-fill.svg" alt="homeIcon" class="me-3" /><a href="index.html" class="text-decoration-none text-light">Home</a>
+              <img src="assets/icons/house-door-fill.svg" alt="homeIcon" class="me-3" /><a href="home.html" class="text-decoration-none text-light">Home</a>
             </p>
             <p class="d-flex align-items-center mb-2">
               <img src="assets/icons/search.svg" alt="searchIcon" class="me-3" /><a href="search.html" class="text-decoration-none text-light">Cerca</a>
@@ -313,6 +313,8 @@
         </div>
       </div>
     </div>
+    <button class="play-button" data-track="spotify:track:3n3Ppam7vgaVa1iaRUc9Lp">Riproduci Brano</button>
+    <button class="pause-button">Ferma Brano</button>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -326,4 +328,6 @@
   <script type="module" src="assets/js/index.js"></script>
   <script src="assets/js/list.js"></script>
   <script src="./js/home.js" type="module"></script>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script src="./js/player.js" type="module"></script>
 </html>

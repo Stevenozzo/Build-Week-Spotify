@@ -1,157 +1,116 @@
-// import { player, initTracks, playerAlbumTrack, initArtist, playArtistFunction } from "./player.js";
+const token = localStorage.getItem("access_token");
 
-// const playArtist = document.getElementById("playArtist");
-// const addressBarParameters = new URLSearchParams(location.search);
-// const artistId = addressBarParameters.get("artistId");
-// console.log("artistId", artistId);
+if (!token) {
+  location.href = "/home.html";
+}
 
-////////////////////////////////
+const urlParam = new URLSearchParams(window.location.search);
+const artistName = urlParam.get("artistName");
 
-const clientId = "7b034cec707f4f8d90a0afdb115bd809";
-const clientSecret = "5514452ad2a34ace9f586ac267d2c688";
-const authUrlBase = "https://accounts.spotify.com/authorize";
+let artistId;
+let topTracksInfo = [];
 
-// let apiKeyTemp = "";
+const getArtistData = async () => {
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist&limit=1`;
 
-// window.onload = function () {
-//   initArtist(artistId);
-//   player();
-// };
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-// playArtist.addEventListener("click", () => {
-//   playArtistFunction();
-// });
+    const data = await response.json();
 
-// const keyUrl = "https://striveschool-api.herokuapp.com/api/deezer/artist/";
-// fetch(keyUrl + artistId)
-//   .then((response) => {
-//     if (response.ok) {
-//       return response.json();
-//     } else {
-//       throw new Error("errore nella chiamata");
-//     }
-//   })
-//   .then((singleArtist) => {
-//     console.log(singleArtist);
-//     displayArtistDetails(singleArtist);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   })
-// const keyUrl1 = "/top?limit=11";
-// // // fetch(keyUrl + artistId + keyUrl1)
-// //   .then((response) => {
-// //     if (response.ok) {
-// //       return response.json();
-// //     } else {
-// //       throw new Error("errore");
-// //     }
-// //   })
-// //   .then((singleTrack) => {
-// //     console.log(singleTrack);
+    if (data.artists.items.length > 0) {
+      artistId = data.artists.items[0].id;
+      getImageUrl(data); // Update page with artist info
+      console.log("ID Artista:", artistId);
 
-// //     topTracks(singleTrack);
-// //   });
-
-fetch(authUrlBase, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
-  },
-  body: new URLSearchParams({
-    grant_type: "client_credentials",
-  }),
-})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((error) => {
+      await getArtistTracks(artistId); // Wait for tracks to be fetched
+      populatePage(); // Call populatePage after getting tracks
+    } else {
+      console.log("Artista non trovato");
+    }
+  } catch (error) {
     console.error("Errore:", error);
+  }
+};
+
+const getImageUrl = (data) => {
+  const imageUrl = data.artists.items[0].images[0].url;
+  console.log(imageUrl);
+
+  const div = document.getElementById("partesuperiore");
+  div.style.backgroundImage = `url(${imageUrl})`;
+  div.style.backgroundSize = "contain";
+  div.style.backgroundPosition = "center";
+  div.style.backgroundRepeat = "no-repeat";
+  div.style.height = "60vh";
+  div.style.position = "relative";
+
+  const h1 = document.querySelector("h1");
+  h1.innerText = artistName;
+
+  const h2 = document.createElement("h2");
+  h2.innerText = `Followers: ${data.artists.items[0].followers.total}`;
+  h2.style.color = "white";
+  h2.style.fontSize = "1rem";
+  h2.style.margin = "0";
+  h2.style.position = "absolute";
+  h2.style.bottom = "20px";
+  h2.style.left = "20px";
+  h2.style.padding = "10px";
+  h2.style.borderRadius = "8px";
+
+  div.appendChild(h2);
+};
+
+const mostraTracce = (trackName, trackImg, index) => {
+  const container = document.getElementById("topTrackList");
+  const trackElement = document.createElement("div");
+  trackElement.setAttribute("id", "trackList");
+  trackElement.innerHTML = `<div class="tracksList d-flex align-center">
+      <p style="margin-top:auto; margin-bottom:auto; width:40px; height:40px" class="px-2 d-flex align-center justify-content-center">${index + 1}</p>
+      <img style="margin-top:auto; margin-bottom:auto; margin-inline:1rem" id="singleImgTopTrack" src="${trackImg}" alt="trackImg" width=60 height=60>
+      <div class="d-flex flex-column">
+          <p class="m-0">${trackName}</p> 
+          <p style="color:#A7A7A6" class="m-0">${artistName}</p> 
+      </div>
+    </div>`;
+  container.appendChild(trackElement);
+};
+
+const getArtistTracks = async (artistId) => {
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    console.log("Dati dell'artista:", data);
+    console.log("Tracce dell'artista:", data.tracks);
+
+    for (const track of data.tracks) {
+      topTracksInfo.push({
+        trackName: track.name,
+        trackImg: track.album.images[0].url,
+        trackDuration: track.duration_ms,
+      });
+    }
+  } catch (error) {
+    console.log("Errore nella richiesta delle tracce:", error);
+  }
+};
+
+const populatePage = () => {
+  topTracksInfo.forEach((track, index) => {
+    mostraTracce(track.trackName, track.trackImg, index);
   });
+};
 
-const vendittiId = "3hYLJPJuDyblFKersEaFd6";
-
-const apiUrlArtist = "https://api.spotify.com/v1/artists/${vendittiId}";
-
-//   fetch(apiUrlArtist, {
-//     method: "GET",
-//     headers: {
-//       Authorization: "Bearer " + apiKeyTemp,
-//     },
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok: " + response.statusText);
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log(data);
-//     })
-//     .catch((error) => {
-//       console.error("Errore:", error);
-//     });
-
-// function displayArtistDetails(singleArtist) {
-//   const img = document.getElementById("imgArtist");
-//   const artist = document.getElementById("artist");
-//   const ascoltatori = document.getElementById("ascoltatori");
-//   const follow = document.getElementById("follow");
-
-//   follow.addEventListener("click", function () {
-//     if (follow.innerHTML === "Follow") {
-//       follow.innerHTML = "Following";
-//       follow.style.color = "gray";
-//     } else {
-//       follow.innerHTML = "Follow";
-//       follow.style.color = "white";
-//     }
-//   });
-
-//   follow.innerHTML = "Follow";
-//   img.src = singleArtist.picture_medium;
-//   artist.innerText = singleArtist.name;
-//   ascoltatori.innerHTML = `${singleArtist.nb_fan} ascoltatori mensili `;
-// }
-
-// function topTracks(singleTrack) {
-//   const topTrackList = document.getElementById("topTrackList");
-//   let tracksHTML = "";
-
-//   singleTrack.data.forEach((track) => {
-//     tracksHTML += `
-//                 <div class= "row d-flex align-items-center my-2 user-select-none" id="${track.id}">
-//                     <div class="col-6 d-flex my-2" onclick='playerAlbumTrack(${track.id})'>
-//                         <img src="${track.album.cover_medium}" alt="Album Cover" class="w-10">
-//                         <h6 class="mb-0 mt-1 ms-2 title">${truncate(track.title, 15)}</h6>
-//                     </div>
-//                     <div class="col-3 my-2">
-//                         <p class="text-muted ">${track.rank}</p>
-//                     </div>
-//                     <div class="col-3 my-2">
-//                         <p class="text-muted ">${convertDuration(track.duration)}</p>
-//                     </div>
-//                 </div>
-
-//         `;
-//   });
-
-//   topTrackList.innerHTML = tracksHTML;
-// }
-
-// function convertDuration(seconds) {
-//   const minutes = Math.floor(seconds / 60) < 10 ? "0" + Math.floor(seconds / 60) : Math.floor(seconds / 60);
-//   const remainingSeconds = seconds % 60 < 10 ? "0" + (seconds % 60) : seconds % 60;
-//   return `${minutes}:${remainingSeconds}`;
-// }
-// function truncate(text, maxLength) {
-//   if (text.length > maxLength) {
-//     return text.slice(0, 17) + "...";
-//   }
-//   return text;
-// }
-
-// window.playerAlbumTrack = playerAlbumTrack;
-// window.playArtistFunction = playArtistFunction;
+// Call the function to fetch artist data and tracks
+getArtistData();
