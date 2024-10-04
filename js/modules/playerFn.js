@@ -1,4 +1,5 @@
 const tokena = localStorage.getItem("access_token");
+
 export function transferPlayback(deviceId, token = tokena) {
   fetch("https://api.spotify.com/v1/me/player", {
     method: "PUT",
