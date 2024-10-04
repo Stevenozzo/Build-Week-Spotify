@@ -355,7 +355,7 @@ function createAlbumCards(track, album) {
           <p class="card-text text-secondary mb-4 fs-small">
             <a href="./artist.html?artistId=${track.artists[0].id}" class="text-decoration-none text-white">${track.artists[0].name}</a>
           </p>
-          <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5 rounded-circle" onclick="playerTracks('${track.uri}')">
+          <button type="button" class="btn btn-primary  circle-button position-absolute top-85 end-5 rounded-circle" onclick="playerTracks('${track.uri}')">
             <i class="bi bi-play-fill fs-4"></i>
           </button>
         </div>
