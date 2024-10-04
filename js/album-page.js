@@ -6,6 +6,7 @@ if (!token) {
 }
 
 let player;
+let progressInterval; // Variable to store the interval ID
 
 window.onSpotifyWebPlaybackSDKReady = () => {
   player = new Spotify.Player({
@@ -44,9 +45,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       if (state.paused) {
         playBtn.style.display = "block";
         pauseBtn.style.display = "none";
+        clearInterval(progressInterval); // Stop the progress updates
       } else {
         playBtn.style.display = "none";
         pauseBtn.style.display = "block";
+        // Start updating the progress bar
+        startProgressInterval();
       }
     }
   });
@@ -67,6 +71,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.log('Playback resumed');
         document.getElementById("play-btn").style.display = "none";
         document.getElementById("pause-btn").style.display = "block";
+        startProgressInterval(); // Start updating the progress bar
       });
     }
   });
@@ -77,6 +82,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         console.log('Playback paused');
         document.getElementById("pause-btn").style.display = "none";
         document.getElementById("play-btn").style.display = "block";
+        clearInterval(progressInterval); // Stop the progress updates
       });
     }
   });
@@ -114,6 +120,22 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   });
 };
 
+// Function to start updating the progress bar
+function startProgressInterval() {
+  progressInterval = setInterval(() => {
+    player.getCurrentState().then(state => {
+      if (state) {
+        const currentPosition = state.position / 1000; // Convert to seconds
+        const duration = state.duration / 1000; // Convert to seconds
+        document.getElementById("progress").value = currentPosition;
+        document.getElementById("current-time").innerText = formatTime(currentPosition);
+        document.getElementById("total-time").innerText = formatTime(duration);
+      }
+    });
+  }, 1000); // Update every second
+}
+
+// Transfer playback to the Web SDK device
 function transferPlaybackHere(device_id) {
   fetch('https://api.spotify.com/v1/me/player', {
     method: 'PUT',
@@ -123,7 +145,7 @@ function transferPlaybackHere(device_id) {
     },
     body: JSON.stringify({
       "device_ids": [device_id],
-      "play": true
+      "play": true // Set to true to start playback on transfer
     })
   });
 }
@@ -134,6 +156,7 @@ function formatTime(seconds) {
   const secs = Math.floor(seconds % 60);
   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
+
 
 
 function getParamFromUrl(paramName) {
