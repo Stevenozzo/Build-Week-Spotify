@@ -73,7 +73,7 @@ const mostraTracce = (trackName, trackImg, index) => {
   const container = document.getElementById("topTrackList");
   const trackElement = document.createElement("div");
   trackElement.setAttribute("id", "trackList");
-  trackElement.innerHTML = `<div class="tracksList d-flex align-center">
+  trackElement.innerHTML = `<div class="tracksList d-flex my-3 align-center" style="cursor: pointer">
       <p style="margin-top:auto; margin-bottom:auto; width:40px; height:40px" class="px-2 d-flex align-center justify-content-center">${index + 1}</p>
       <img style="margin-top:auto; margin-bottom:auto; margin-inline:1rem" id="singleImgTopTrack" src="${trackImg}" alt="trackImg" width=60 height=60>
       <div class="d-flex flex-column">
