@@ -276,13 +276,11 @@ function albumData(albumId) {
     .then((dataAlbum) => {
       console.log(dataAlbum.images.length);
       if (dataAlbum.images && dataAlbum.images.length > 0) {
-        const coverImage = dataAlbum.images[0].url; // immagine di copertura
-        const albumTracks = dataAlbum.tracks.items; // tracce dell'album
+        const coverImage = dataAlbum.images[0].url; // Puoi mantenere l'immagine di copertura se necessaria
+        const albumTracks = dataAlbum.tracks.items;
 
-        buildCarousel(albumTracks, coverImage);
-        albumTracks.forEach((track) => {
-          createAlbumCards(track, dataAlbum); // Passa anche l'album
-        });
+        buildCarousel(albumTracks, coverImage); // Potresti voler mantenere questa funzione se è necessaria
+        createAlbumCards(albumTracks, dataAlbum); // Passa l'oggetto album completo
       } else {
         console.log("Nessuna immagine disponibile per questo album.");
       }
@@ -345,23 +343,25 @@ function createAlbumCards(track, album) {
   const trackIndex = track.id;
   trackDataArray.push(track);
 
-  // Costruisci la card con i dati dell'album
-  cardsAlbumRow.innerHTML += `
-    <div class="col-12 col-md-6  rounded scaleHover">
-      <div class="card w-100 my-3">
-        <img src="${album.images[0].url}" class="card-img-top" alt="${album.name}"> <!-- Immagine dell'album -->
-        <div class="card-body ">
-          <h5 class="card-title my-2 truncateText"><a href="#" class="text-decoration-none text-white">${album.name}</a></h5>
-          <p class="card-text text-secondary mb-4 fs-small">
-            <a href="./artist.html?artistId=${track.artists[0].id}" class="text-decoration-none text-white">${track.artists[0].name}</a>
-          </p>
-          <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5 rounded-circle" onclick="playerTracks('${track.uri}')">
-            <i class="bi bi-play-fill fs-4"></i>
-          </button>
+  // Costruisci la card per ogni immagine dell'album
+  album.images.forEach((image, index) => {
+    cardsAlbumRow.innerHTML += `
+      <div class="col-12 col-md-6 rounded scaleHover" key="${index}">
+        <div class="card w-100 my-3">
+          <img src="${image.url}" class="card-img-top" alt="${album.name}"> <!-- Immagine dell'album -->
+          <div class="card-body">
+            <h5 class="card-title my-2 truncateText"><a href="#" class="text-decoration-none text-white">${album.name}</a></h5>
+            <p class="card-text text-secondary mb-4 fs-small">
+              <a href="./artist.html?artistId=${track.artists[0].id}" class="text-decoration-none text-white">${track.artists[0].name}</a>
+            </p>
+            <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5 rounded-circle" onclick="playerTracks('${track.uri}')">
+              <i class="bi bi-play-fill fs-4"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  `;
+    `;
+  });
 }
 
 // ./albumdetails.html?albumId=${track[0].album.id}
