@@ -70,7 +70,33 @@
       </div>
     </main>
     <footer class=""></footer>
+    <div id="spotify-player" class="spotify-player">
+      <div class="track-info">
+        <img id="album-cover" src="" alt="Album cover" class="album-cover" />
+        <div class="track-details">
+          <p id="track-name">Track Name</p>
+          <p id="artist-name">Artist Name</p>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="prev-btn">⏮️</button>
+        <button id="play-btn">▶️</button>
+        <button id="pause-btn" style="display: none">⏸️</button>
+        <!-- Hide initially -->
+        <button id="next-btn">⏭️</button>
+      </div>
+      <div class="progress-bar">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" value="0" min="0" max="100" />
+        <span id="total-time">0:00</span>
+      </div>
+      <div class="volume-control">
+        <label for="volume">🔊</label>
+        <input type="range" id="volume" value="50" min="0" max="100" />
+      </div>
+    </div>
   </body>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"></script>
   <script type="module" src="./js/album-page.js"></script>
 </html>

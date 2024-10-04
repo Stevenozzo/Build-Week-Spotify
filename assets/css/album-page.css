@@ -155,5 +155,60 @@ main {
 
 footer {
     width: 10%;
-    background-color: #000000;
+    background: black;
+}
+
+/* Full-width player */
+.spotify-player {
+    width: 100vw; 
+    position: absolute; 
+    left: 0; /* Align player to the left */
+    bottom: 0; /* Align player to the bottom of the viewport */
+    background-color: #282828; /* Dark background */
+    padding: 10px; /* Padding around the player */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Optional shadow for separation */
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center items vertically */
+}
+
+/* Additional styles for components within the player */
+.track-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Spacing between track info and controls */
+}
+
+.album-cover {
+    width: 50px; /* Set width for album cover */
+    height: 50px; /* Set height for album cover */
+    margin-right: 10px; /* Spacing between image and track details */
+}
+
+.controls {
+    display: flex; /* Align buttons in a row */
+}
+
+.controls button {
+    background: none; /* No background */
+    border: none; /* Remove border */
+    color: white; /* White text color */
+    font-size: 24px; /* Button size */
+    margin: 0 5px; /* Space between buttons */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.progress-bar {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    margin: 0 10px; /* Margin on sides */
+}
+
+#progress {
+    flex: 1; /* Allow progress bar to grow */
+    margin: 0 10px; /* Spacing around the progress bar */
+}
+
+.volume-control {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center label and input vertically */
 }

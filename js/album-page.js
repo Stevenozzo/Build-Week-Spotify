@@ -5,6 +5,137 @@ if (!token) {
   location.href = "/index.html";
 }
 
+let player;
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  player = new Spotify.Player({
+    name: 'Web Playback SDK Player',
+    getOAuthToken: cb => { cb(token); },
+    volume: 0.5,
+    robustnessLevel: 'HW_SECURE_ALL' // Specify robustness level here
+  });
+
+  // Error handling
+  player.addListener('initialization_error', ({ message }) => console.error(message));
+  player.addListener('authentication_error', ({ message }) => console.error(message));
+  player.addListener('account_error', ({ message }) => console.error(message));
+  player.addListener('playback_error', ({ message }) => console.error(message));
+
+  // Playback status updates
+  player.addListener('player_state_changed', state => {
+    console.log(state);
+    if (state) {
+      const currentTrack = state.track_window.current_track;
+      document.getElementById("track-name").innerText = currentTrack.name;
+      document.getElementById("artist-name").innerText = currentTrack.artists[0].name;
+      document.getElementById("album-cover").src = currentTrack.album.images[0].url;
+
+      const currentPosition = state.position / 1000; // Convert to seconds
+      const duration = state.duration / 1000; // Convert to seconds
+      document.getElementById("progress").value = currentPosition;
+      document.getElementById("progress").max = duration;
+
+      document.getElementById("current-time").innerText = formatTime(currentPosition);
+      document.getElementById("total-time").innerText = formatTime(duration);
+
+      // Update play/pause button based on playback state
+      const playBtn = document.getElementById("play-btn");
+      const pauseBtn = document.getElementById("pause-btn");
+      if (state.paused) {
+        playBtn.style.display = "block";
+        pauseBtn.style.display = "none";
+      } else {
+        playBtn.style.display = "none";
+        pauseBtn.style.display = "block";
+      }
+    }
+  });
+
+  // Ready
+  player.addListener('ready', ({ device_id }) => {
+    console.log('Ready with Device ID', device_id);
+    transferPlaybackHere(device_id);
+  });
+
+  // Connect to the player!
+  player.connect();
+
+  // Add event listeners for player controls
+  document.getElementById("play-btn").addEventListener("click", () => {
+    if (player) {
+      player.resume().then(() => {
+        console.log('Playback resumed');
+        document.getElementById("play-btn").style.display = "none";
+        document.getElementById("pause-btn").style.display = "block";
+      });
+    }
+  });
+
+  document.getElementById("pause-btn").addEventListener("click", () => {
+    if (player) {
+      player.pause().then(() => {
+        console.log('Playback paused');
+        document.getElementById("pause-btn").style.display = "none";
+        document.getElementById("play-btn").style.display = "block";
+      });
+    }
+  });
+
+  document.getElementById("prev-btn").addEventListener("click", () => {
+    if (player) {
+      player.previousTrack().then(() => {
+        console.log('Skipped to previous track');
+      });
+    }
+  });
+
+  document.getElementById("next-btn").addEventListener("click", () => {
+    if (player) {
+      player.nextTrack().then(() => {
+        console.log('Skipped to next track');
+      });
+    }
+  });
+
+  // Volume control
+  document.getElementById("volume").addEventListener("input", function () {
+    const volume = this.value / 100;
+    if (player) {
+      player.setVolume(volume);
+    }
+  });
+
+  // Progress bar control
+  document.getElementById("progress").addEventListener("input", function () {
+    const newPosition = this.value;
+    if (player) {
+      player.seek(newPosition * 1000); // Convert to milliseconds
+    }
+  });
+};
+
+function transferPlaybackHere(device_id) {
+  fetch('https://api.spotify.com/v1/me/player', {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "device_ids": [device_id],
+      "play": true
+    })
+  });
+}
+
+// Function to format time in mm:ss format
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+
 function getParamFromUrl(paramName) {
   return new URLSearchParams(window.location.search).get(paramName);
 }
@@ -17,7 +148,6 @@ function formatDuration(ms) {
   const seconds = ((ms % 60000) / 1000).toFixed(0);
   return `${minutes}h ${seconds < 10 ? "0" : ""}${seconds}s`;
 }
-
 async function fetchArtistInfo(id) {
   try {
     const response = await fetch(`https://api.spotify.com/v1/artists/${id}`, {
@@ -45,7 +175,8 @@ async function fetchAlbumInfo(id) {
       tracks: album.tracks.items.map(track => ({
         name: track.name,
         duration: track.duration_ms,
-        explicit: track.explicit
+        explicit: track.explicit,
+        uri: track.uri  // This is necessary for full playback
       }))
     };
   } catch (error) {
@@ -71,10 +202,11 @@ async function fetchArtistPlaylists(artistName) {
 function renderAlbumTracks(tracks, artistName) {
   const ulElement = document.getElementById("tracks-list");
   let totalDuration = 0;
+
   let trackHtml = tracks.map((track, index) => {
     totalDuration += track.duration;
     return `
-      <li class="flex space-between p-1">
+      <li class="flex space-between p-1 track-item" data-track-uri="${track.uri}">
         <div class="flex width-30 align-center">
           <p class="flex p-1 align-center square-40 justify-end">${index + 1}</p>
           <div class="flex column justify-center">
@@ -89,12 +221,28 @@ function renderAlbumTracks(tracks, artistName) {
 
   ulElement.innerHTML = trackHtml;
 
-  // Update total duration in the DOM
-  const totalMinutes = Math.floor(totalDuration / 60000);
-  const totalSeconds = ((totalDuration % 60000) / 1000).toFixed(0);
-  const formattedTotalDuration = `${totalMinutes} min ${totalSeconds < 10 ? "0" : ""}${totalSeconds} sec`;
-  document.getElementById("tot-duration").innerText = formattedTotalDuration;
+  // Add event listeners to each track item to play the full track when clicked
+  document.querySelectorAll('.track-item').forEach(item => {
+    item.addEventListener('click', function () {
+      const trackUri = this.getAttribute('data-track-uri');
+      if (trackUri && player) {
+        player._options.getOAuthToken(access_token => {
+          fetch(`https://api.spotify.com/v1/me/player/play`, {
+            method: 'PUT',
+            body: JSON.stringify({ uris: [trackUri] }),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${access_token}`
+            },
+          }).then(() => {
+            console.log(`Playing track ${trackUri}`);
+          });
+        });
+      }
+    });
+  });
 }
+
 
 function renderArtistPlaylists(playlists, artistName) {
   const headerElement = document.getElementById("playlist-header");
@@ -146,3 +294,4 @@ async function populatePage() {
 }
 
 populatePage();
+
