@@ -276,11 +276,13 @@ function albumData(albumId) {
     .then((dataAlbum) => {
       console.log(dataAlbum.images.length);
       if (dataAlbum.images && dataAlbum.images.length > 0) {
-        const coverImage = dataAlbum.images[0].url;
-        const albumTracks = dataAlbum.tracks.items;
+        const coverImage = dataAlbum.images[0].url; // immagine di copertura
+        const albumTracks = dataAlbum.tracks.items; // tracce dell'album
 
         buildCarousel(albumTracks, coverImage);
-        createAlbumCards(albumTracks, coverImage);
+        albumTracks.forEach((track) => {
+          createAlbumCards(track, dataAlbum); // Passa anche l'album
+        });
       } else {
         console.log("Nessuna immagine disponibile per questo album.");
       }
@@ -337,34 +339,31 @@ function buildCarousel(datasetArray, coverImage) {
   });
 }
 
-// tracksSavers = document.getElementsByClassName("saver");
-
 // Funzione per creare le card____________________________________________
-function createAlbumCards(track) {
-  // Aggiungi il track al trackDataArray e ottieni l'indice
-  const trackIndex = track[0].id;
+function createAlbumCards(track, album) {
+  // Aggiungi la traccia al trackDataArray
+  const trackIndex = track.id;
   trackDataArray.push(track);
-  console.log(track);
-  // if (!track[0]) {
-  //   return;
-  // }
-  // if (!track[0].artists[0]) {
-  //   return;
-  // }
+
+  // Costruisci la card con i dati dell'album
   cardsAlbumRow.innerHTML += `
-        <div class="col-12 col-md-3 mb-3 rounded scaleHover"
-          <div class="card w-25 " >
-          <div class="position-relative">
-           
-            <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5  rounded-circle "><i class="bi bi-play-fill fs-4" onclick="playerTracks(${trackIndex})"></i></button>
-            </div>        
-            
-            <div class="card-body">
-                <h5 class="card-title my-2 truncateText"><a href = "#"  class="text-decoration-none text-white"></a></h5>
-                <p class="card-text text-secondary mb-4 fs-small "><a href = "./artist.html?artistId=${track[0]?.artists[0].id}" class="text-decoration-none text-white">${track[0]?.artists[0].name}</a></p>
-            </div>
-        </div>`;
+    <div class="col-12 col-md-6  rounded scaleHover">
+      <div class="card w-100 my-3">
+        <img src="${album.images[0].url}" class="card-img-top" alt="${album.name}"> <!-- Immagine dell'album -->
+        <div class="card-body ">
+          <h5 class="card-title my-2 truncateText"><a href="#" class="text-decoration-none text-white">${album.name}</a></h5>
+          <p class="card-text text-secondary mb-4 fs-small">
+            <a href="./artist.html?artistId=${track.artists[0].id}" class="text-decoration-none text-white">${track.artists[0].name}</a>
+          </p>
+          <button type="button" class="btn btn-primary circle-button position-absolute bottom-10 end-5 rounded-circle" onclick="playerTracks('${track.uri}')">
+            <i class="bi bi-play-fill fs-4"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
 }
+
 // ./albumdetails.html?albumId=${track[0].album.id}
 //-----------------------------------------------------------
 
