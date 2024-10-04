@@ -1,7 +1,9 @@
 import { player, playerCarousel, playerTracks, initTracks } from "./player.js";
 //import variabili
 import { trackDataArray } from "./player.js";
+import { readCookie } from "./cookies.js";
 
+const token = readCookie("SpotifyBearer");
 const albumsId = ["11205422", "534017402", "544892012", "420845567", "6327742", "112217392", "6157080", "74872972"];
 const carouselRow = document.getElementById("carousel");
 const cardsAlbumRow = document.getElementById("cardsAlbum");
@@ -73,23 +75,29 @@ function buonaseraBuilder() {
 }
 
 //-------------------------------------------------------
-const albumData = function (type, album) {
-  const apiKey = `https://striveschool-api.herokuapp.com/api/deezer/${type}/${album}`;
+// Funzione per ottenere i dati dell'album da Spotify
+const albumData = function (albumId) {
+  const spotifyApiEndpoint = `https://api.spotify.com/v1/albums/${albumId}`;
   loading.style.display = "block";
 
-  fetch(apiKey)
+  fetch(spotifyApiEndpoint, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
     .then((response) => {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("No Album No party");
+        throw new Error("Impossibile ottenere i dati dell'album da Spotify");
       }
     })
     .then((dataAlbum) => {
-      // const arrayAlbum = Array.from(dataAlbum)
-      const albumtracks = Array.from(dataAlbum.tracks.data);
-      buildCarousel(albumtracks);
-      createAlbumCards(albumtracks);
+      const albumtracks = dataAlbum.tracks.items; // le tracce sono contenute in 'items' nel campo 'tracks'
+      buildCarousel(albumtracks); // Costruisci il carosello con le tracce dell'album
+      createAlbumCards(albumtracks); // Crea le card dell'album
     })
     .catch((error) => {
       console.error("Errore:", error);
@@ -100,8 +108,8 @@ const albumData = function (type, album) {
 };
 
 function buildCarouselItems() {
-  albumsId.forEach((e) => {
-    albumData("album", e);
+  albumsId.forEach((albumId) => {
+    albumData(albumId);
   });
 }
 
