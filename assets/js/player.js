@@ -17,7 +17,7 @@ localStorage.setItem("playlists", JSON.stringify([]));
 playlists = JSON.parse(localStorage.getItem("playlists"));
 playlists.push(JSON.stringify(likePlaylist));
 
-export function player() {
+export function player2() {
   const audio = document.getElementById("audio");
   const rangeAudio = document.getElementById("rangeAudio");
   const currentDuration = document.getElementById("currentDuration");
