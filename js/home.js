@@ -1,5 +1,5 @@
 import { readCookie } from "./cookies.js";
-import { player, playerCarousel, playerTracks, initTracks } from "../assets/js/player.js";
+import { player2, playerCarousel, playerTracks, initTracks } from "../assets/js/player.js";
 //import variabili
 import { trackDataArray } from "../assets/js/player.js";
 const artistName = "Antonello Venditti";
@@ -209,7 +209,7 @@ if (!playlists) {
 
 window.onload = function () {
   initTracks();
-  player();
+  player2();
   buildCarouselItems();
   // buonaseraBuilder();
 };
@@ -448,3 +448,29 @@ window.playerTracks = playerTracks;
 window.initTracks = initTracks;
 window.salvaModal = salvaModal;
 window.addTrackPlaylist = addTrackPlaylist;
+
+import { initSpotifyPlayer, nextTrack, previousTrack, player } from './player.js';
+
+const albumId = "2gJy8l07yFCDvGnscXyl9F";
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  console.log(albumId);
+  initSpotifyPlayer(albumId, token); // Initialize the player with album tracks and token
+};
+
+// Hook up previous and next buttons to the exported functions
+document.getElementById("prev-btn").addEventListener("click", previousTrack);
+document.getElementById("next-btn").addEventListener("click", nextTrack);
+
+// Play/Pause controls can also be hooked up here
+document.getElementById("play-btn").addEventListener("click", () => {
+  player.resume().then(() => {
+    console.log('Playback resumed');
+  });
+});
+
+document.getElementById("pause-btn").addEventListener("click", () => {
+  player.pause().then(() => {
+    console.log('Playback paused');
+  });
+});

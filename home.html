@@ -204,7 +204,7 @@
          </div> -->
     </main>
 
-    <div class="divPlayer bg-grayMain align-items-center p-3 position-fixed bottom-10 w-100 z-3 h-15">
+    <div class="d-none divPlayer bg-grayMain align-items-center p-3 position-fixed bottom-10 w-100 z-3 h-15">
       <audio id="audio" crossorigin="anonymous">
         <source src="https://cdn-preview-5.dzcdn.net/stream/c-56b90c84e99cca5b7e5c7f5059e4696f-2.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -313,7 +313,33 @@
         </div>
       </div>
     </div>
-
+    <div class="w-100 position-fixed bottom-0 z-3 bg-black align-content-center" id="spotify-player" class="spotify-player">
+      <div class="track-info">
+        <img id="album-cover" src="" alt="Album cover" class="album-cover" width="80" />
+        <div class="track-details">
+          <p id="track-name">Track Name</p>
+          <p id="artist-name">Artist Name</p>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="rewind-btn">Rewind 15s</button>
+        <button id="prev-btn">⏮️</button>
+        <button id="play-btn">▶️</button>
+        <button id="pause-btn" style="display: none">⏸️</button>
+        <!-- Hide initially -->
+        <button id="next-btn">⏭️</button>
+        <button id="skip-btn">Skip 15s</button>
+      </div>
+      <div class="progress-bar">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" value="0" min="0" max="100" />
+        <span id="total-time">0:00</span>
+      </div>
+      <div class="volume-control">
+        <label for="volume">🔊</label>
+        <input type="range" id="volume" value="50" min="0" max="100" />
+      </div>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -326,4 +352,5 @@
   <!-- <script type="module" src="assets/js/index.js"></script> -->
   <script src="assets/js/list.js"></script>
   <script src="./js/home.js" type="module"></script>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </html>
