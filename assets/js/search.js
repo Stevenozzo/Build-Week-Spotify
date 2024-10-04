@@ -1,9 +1,9 @@
 // import { player, initTracks, searchTrack } from "./player.js";
 
 import { readCookie } from "../../js/cookies.js";
-const token = readCookie("SpotifyBearer");
+const token = localStorage.getItem("access_token");
 if (!token) {
-  location.href = "/index.html";
+  location.href = "/home.html";
 }
 
 const loading = document.getElementById("loading");

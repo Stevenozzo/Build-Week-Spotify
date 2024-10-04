@@ -1,8 +1,7 @@
-import { readCookie } from "../../js/cookies.js";
+const token = localStorage.getItem("access_token");
 
-const token = readCookie("SpotifyBearer");
 if (!token) {
-  location.href = "/index.html";
+  location.href = "/home.html";
 }
 
 const urlParam = new URLSearchParams(window.location.search);
@@ -49,7 +48,6 @@ const getImageUrl = (data) => {
   div.style.backgroundRepeat = "no-repeat";
   div.style.height = "60vh";
   div.style.position = "relative";
-
 
   const h1 = document.querySelector("h1");
   h1.innerText = artistName;
@@ -100,7 +98,7 @@ const getArtistTracks = async (artistId) => {
       topTracksInfo.push({
         trackName: track.name,
         trackImg: track.album.images[0].url,
-        trackDuration: track.duration_ms
+        trackDuration: track.duration_ms,
       });
     }
   } catch (error) {
