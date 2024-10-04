@@ -6,7 +6,8 @@ if (!token) {
 }
 
 const urlParam = new URLSearchParams(window.location.search);
-const artistName = urlParam.get("artistName");
+// const artistName = urlParam.get("artistName");
+const artistName = "Antonello Venditti";
 
 let artistId;
 let topTracksInfo = [];
@@ -24,6 +25,7 @@ const getArtistData = async () => {
     const data = await response.json();
 
     if (data.artists.items.length > 0) {
+      console.log(data);
       artistId = data.artists.items[0].id;
       getImageUrl(data); // Update page with artist info
       console.log("ID Artista:", artistId);
