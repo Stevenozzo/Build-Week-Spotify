@@ -308,6 +308,7 @@ function buildCarousel(datasetArray, coverImage) {
   }
 
   datasetArray.forEach((element) => {
+    console.log(element);
     const active = document.querySelectorAll(".carousel-item").length < 1 ? "active" : "";
     const escapedElement = JSON.stringify(element).replace(/"/g, "&quot;");
     // console.log(element);
@@ -321,9 +322,9 @@ function buildCarousel(datasetArray, coverImage) {
                   <h6 class="fs-supersmall">ALBUM</h6>
                   <h1>${truncate(element.name, 14)}</h1>
                   <p class="fs-small">
-                    <a href="albumdetails.html" class="text-light text-decoration-none">${element.album ? element.album.title : "Unknown Album"}</a>
+                    <a href="albumdetails.html" class="text-light text-decoration-none">${element.name}</a>
                   </p>
-                  <p class="fs-small mb-0">${convertDuration(element.duration)}</p>
+                  <p class="fs-small mb-0">${convertDuration(element.duration_ms)}</p>
                   <div class="w-100 d-flex align-items-center">
                       <button onclick='playerCarousel(${escapedElement})' class="btn btn-sm bg-primary rounded-5 px-4 py-2 me-3 h-25 fw-bold text-black">Play</button>
                       <button onclick="salvaModal(${escapedElement})" class="btn btn-sm bg-black text-white rounded-5 px-4 py-2 me-3 h-25 border border-white border-1 saver" data-bs-toggle="modal" data-bs-target="#aggiuntaBrano">Salva</button>
